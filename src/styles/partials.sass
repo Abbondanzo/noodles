@@ -3,8 +3,6 @@
 #navbar
   background-color: #1b1b1b
   width: 100%
-  height: $nav-height
-  position: absolute
   z-index: 99
 
   .flex-container
@@ -17,41 +15,51 @@
 
       svg
         width: 150px
+        height: auto
+
+    $underline-height: 6px
 
     .links
       display: flex
       align-items: center
       color: #fff
+      padding-bottom: $underline-height
 
       .margin-left
         margin-left: 20px
 
       .link
         cursor: pointer
-        margin: 20px
+        padding: 20px
+        padding-top: (20px + $underline-height)
         position: relative
+        border-left: 1px solid transparent
+        border-right: 1px solid transparent
+        white-space: nowrap
 
         a
           color: #fff
           font-weight: normal
+          font-size: 12px
+          text-transform: uppercase
+
+        &:hover
+          border-color: #252525
 
         &:hover::before
-          right: 0
+          height: 4px
 
         &::before
           content: ""
           position: absolute
-          background: #fff
-          left: 0
-          bottom: -6px
-          right: 100%
-          height: 4px
+          background: $primary-color
+          left: -4px
+          right: -4px
+          bottom: -$underline-height
+          height: 0
           transition: all .25s
           transition-timing-function: cubic-bezier(0.13, 1, 0.98, 0.98)
           overflow: hidden
-
-          &:hover
-            right: 0
 
         &.active
           a
