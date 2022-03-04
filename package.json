@@ -4,11 +4,18 @@
   "description": "Spicy noodle pictures",
   "main": "compile.js",
   "scripts": {
-    "build": "node ./scripts/compile-pug.js"
+    "serve": "node ./scripts/serve.js",
+    "build": "npm run build:sass && npm run build:pug",
+    "build:pug": "node ./scripts/compile-pug.js",
+    "build:sass": "node-sass src/styles/main.sass -o dist/styles --output-style compressed"
   },
   "author": "Peter Abbondanzo",
   "license": "MIT",
   "dependencies": {
+    "node-sass": "^7.0.1",
     "pug": "3.0.2"
+  },
+  "devDependencies": {
+    "node-static": "0.7.11"
   }
 }

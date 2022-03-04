@@ -1,0 +1,39 @@
+@import normalize
+@import partials
+@import variables
+
+body
+  font: 100%
+  background: $background
+  display: grid
+
+.subtitle
+  font-weight: normal
+  font-size: 24px
+
+p
+  font-size: 18px
+  line-height: 1.5
+
+::selection
+  background: $primary-color
+  color: #000
+
+a
+  color: $primary-color
+  font-weight: bold
+
+.centered
+  text-align: center
+
+ul
+  list-style: none
+
+#container
+  overflow: hidden
+  box-shadow: 0px 5px 10px #999999
+  z-index: 2
+
+.content
+  max-width: $content-width
+  margin: 0 auto
