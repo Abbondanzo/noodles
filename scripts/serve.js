@@ -5,10 +5,12 @@ const path = require("path");
 const pug = require("pug");
 
 const VIEWS_PATH = path.join(__dirname, "..", "src", "views");
-const STATIC_PATH = path.join(__dirname, "..", "dist");
+const SRC_PATH = path.join(__dirname, "..", "src");
+const DIST_PATH = path.join(__dirname, "..", "dist");
 const PORT = 3000;
 
-const fileServer = new Server(STATIC_PATH);
+const assetServer = new Server(SRC_PATH);
+const distServer = new Server(DIST_PATH);
 
 try {
   http
@@ -18,10 +20,16 @@ try {
       if (fs.existsSync(path.join(VIEWS_PATH, `${reqUrl}.pug`))) {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(pug.renderFile(path.join(VIEWS_PATH, `${reqUrl}.pug`)));
+      } else if (req.url.startsWith("/assets")) {
+        req
+          .addListener("end", () => {
+            assetServer.serve(req, res);
+          })
+          .resume();
       } else {
         req
           .addListener("end", () => {
-            fileServer.serve(req, res);
+            distServer.serve(req, res);
           })
           .resume();
       }

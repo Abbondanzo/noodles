@@ -1,17 +1,17 @@
 doctype html
 html(lang="en")
-    head
-        title Nood Pictures
-        link(rel="stylesheet" type="text/css" href="styles/main.css")
+  head
+    title Nood Pictures
+    link(rel="stylesheet" type="text/css" href="styles/main.css")
 
-        meta(name="msapplication-TileColor" content="#ff9100")
-        meta(name="theme-color" content="#ff9100")
-        meta(name="description" content="Spicy nood pictures.")
+    meta(name="msapplication-TileColor" content="#ff9100")
+    meta(name="theme-color" content="#ff9100")
+    meta(name="description" content="Spicy nood pictures.")
 
-        script(type="text/javascript").
-            const setActivePage = pageName => {
-                const linkSelector = document.querySelector(`.links #${pageName}`)
-                if (linkSelector) {
-                    linkSelector.classList.add("active")
-                }
-            }
+    script(type="text/javascript").
+      const setActivePage = pageName => {
+        const linkSelector = document.querySelector(`.links #${pageName}`)
+        if (linkSelector) {
+          linkSelector.classList.add("active")
+        }
+      }

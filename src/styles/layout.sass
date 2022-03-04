@@ -1,0 +1,27 @@
+.card-grid
+  display: grid
+  justify-content: center
+  align-content: center
+  grid-template-rows: auto
+  grid-template-columns: repeat(4, 1fr)
+  grid-row-gap: 16px
+  grid-column-gap: 16px
+  padding: 20px 0
+  color: #eee
+
+  @media screen and (min-width: 1200px)
+    grid-template-columns: repeat(5, 1fr)
+
+  .card
+    display: inline-block
+    width: 100%
+
+    .card-image-wrapper
+      width: 100%
+      aspect-ratio: 1.8
+      overflow: hidden
+      margin-bottom: 4px
+
+    img
+      width: 100%
+      height: auto
