@@ -1,0 +1,61 @@
+@import variables
+  
+#navbar
+  background-color: #1b1b1b
+  width: 100%
+  height: $nav-height
+  position: absolute
+  z-index: 99
+
+  .flex-container
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+    .logo
+      max-height: 100%
+
+      svg
+        width: 150px
+
+    .links
+      display: flex
+      align-items: center
+      color: #fff
+
+      .margin-left
+        margin-left: 20px
+
+      .link
+        cursor: pointer
+        margin: 20px
+        position: relative
+
+        a
+          color: #fff
+          font-weight: normal
+
+        &:hover::before
+          right: 0
+
+        &::before
+          content: ""
+          position: absolute
+          background: #fff
+          left: 0
+          bottom: -6px
+          right: 100%
+          height: 4px
+          transition: all .25s
+          transition-timing-function: cubic-bezier(0.13, 1, 0.98, 0.98)
+          overflow: hidden
+
+          &:hover
+            right: 0
+
+        &.active
+          a
+            font-weight: bold
+
+          &::before
+            right: 0

@@ -7,10 +7,10 @@
   <defs>
     <style>
       #nood {
-        fill: #000000;
+        fill: #ffffff;
       }
       #pics {
-        fill: #ffffff;
+        fill: #000000;
       }
       #rounded-rectangle {
         fill: #ff9100;
