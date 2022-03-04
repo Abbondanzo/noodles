@@ -1,0 +1,14 @@
+{
+  "name": "noodles",
+  "version": "1.0.0",
+  "description": "Spicy noodle pictures",
+  "main": "compile.js",
+  "scripts": {
+    "build": "node ./scripts/compile-pug.js"
+  },
+  "author": "Peter Abbondanzo",
+  "license": "MIT",
+  "dependencies": {
+    "pug": "3.0.2"
+  }
+}
