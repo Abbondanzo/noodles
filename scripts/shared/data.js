@@ -14,12 +14,14 @@ const buildGlobalContext = () => {
   const entries = rawData.entries;
   const sections = rawData.sections.map((section) => ({
     ...section,
-    entries: section.entries.map((entryId) => rawData.entries[entryId]),
+    entries: section.entries.map((entryId) => entries[entryId]),
   }));
 
   return {
     entries,
     sections,
+    categorySlugs: rawData.categorySlugs,
+    makeSlugs: rawData.makeSlugs,
   };
 };
 

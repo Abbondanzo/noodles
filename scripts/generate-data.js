@@ -5,9 +5,10 @@ const { DATA_FILE_PATH } = require("./shared/data");
 
 // Paths
 const DATA_DIR = path.resolve(__dirname, "..", "data");
-const CATEGORIES = path.join(DATA_DIR, "categories.txt");
-const SECTIONS = path.join(DATA_DIR, "sections.txt");
-const TITLES = path.join(DATA_DIR, "titles.txt");
+const CATEGORIES_FILE = path.join(DATA_DIR, "categories.txt");
+const MAKES_FILE = path.join(DATA_DIR, "makes.txt");
+const SECTIONS_FILE = path.join(DATA_DIR, "sections.txt");
+const TITLES_FILE = path.join(DATA_DIR, "titles.txt");
 const PICTURES_DIR = path.join(DATA_DIR, "photos");
 
 // Variables
@@ -27,6 +28,22 @@ const MAX_VIEWS = 7.5e6;
 const getRandom = () => Math.sqrt(Math.random() * Math.random());
 
 /**
+ * @param {Array<string>} array
+ * @returns {Generator<string, void, void>}
+ */
+function* createArrayGenerator(array) {
+  let currentArray = [...array];
+  while (true) {
+    if (currentArray.length === 0) {
+      currentArray = [...array];
+    }
+    const indexToPop = Math.floor(getRandom() * currentArray.length);
+    const [arrayItem] = currentArray.splice(indexToPop, 1);
+    yield arrayItem;
+  }
+}
+
+/**
  * @param {string} fileName
  * @returns {Array<string>}
  */
@@ -39,23 +56,6 @@ const readPlaintextFile = (fileName) => {
 };
 
 /**
- * @returns {Generator<Picture, void, void>}
- */
-function* createPictureGenerator() {
-  const pictureFiles = fs.readdirSync(PICTURES_DIR);
-  let currentPictureFiles = [...pictureFiles];
-  while (true) {
-    if (currentPictureFiles.length === 0) {
-      currentPictureFiles = [...pictureFiles];
-    }
-    const indexToPop = Math.floor(getRandom() * currentPictureFiles.length);
-    const [fileName] = currentPictureFiles.splice(indexToPop, 1);
-    const invert = getRandom() <= CHANCE_TO_INVERT_PICTURE;
-    yield { fileName, invert };
-  }
-}
-
-/**
  * @typedef Picture
  * @property {string} fileName
  * @property {boolean} invert
@@ -64,6 +64,7 @@ function* createPictureGenerator() {
 /**
  * @typedef {Object} Entry
  * @property {string} id
+ * @property {string} make
  * @property {string} title
  * @property {string} views
  * @property {Array<string>} categories
@@ -80,9 +81,14 @@ const generateRandomViewCount = () => {
 };
 
 const generateEntries = () => {
-  const titles = readPlaintextFile(TITLES);
-  const categories = readPlaintextFile(CATEGORIES);
-  const pictureGenerator = createPictureGenerator();
+  const titles = readPlaintextFile(TITLES_FILE);
+  const categories = readPlaintextFile(CATEGORIES_FILE);
+
+  const pictureFiles = fs.readdirSync(PICTURES_DIR);
+  const pictureGenerator = createArrayGenerator(pictureFiles);
+
+  const makes = readPlaintextFile(MAKES_FILE);
+  const makesGenerator = createArrayGenerator(makes);
 
   /**
    * @type {Object.<string, Entry>}
@@ -111,11 +117,20 @@ const generateEntries = () => {
       titleCategories.push(remainingCategories[remainingCategoryIndex]);
     }
 
+    const invert = getRandom() <= CHANCE_TO_INVERT_PICTURE;
+    /**
+     * @type {Picture}
+     */
+    const picture = {
+      invert,
+      fileName: pictureGenerator.next().value,
+    };
+
     const entryId = crypto.randomUUID();
-    const picture = pictureGenerator.next().value;
     output[entryId] = {
       id: entryId,
       title,
+      make: makesGenerator.next().value,
       categories: titleCategories,
       views: generateRandomViewCount(),
       picture,
@@ -124,22 +139,6 @@ const generateEntries = () => {
 
   return output;
 };
-
-/**
- * @param {Array<string>} array
- * @returns {Generator<string, void, void>}
- */
-function* createArrayGenerator(array) {
-  let currentArray = [...array];
-  while (true) {
-    if (currentArray.length === 0) {
-      currentArray = [...array];
-    }
-    const indexToPop = Math.floor(getRandom() * currentArray.length);
-    const [arrayItem] = currentArray.splice(indexToPop, 1);
-    yield arrayItem;
-  }
-}
 
 /**
  * @typedef {Object} Section
@@ -152,7 +151,7 @@ function* createArrayGenerator(array) {
  * @returns {Array<Section>}
  */
 const generateSections = (entryIds) => {
-  const sections = readPlaintextFile(SECTIONS);
+  const sections = readPlaintextFile(SECTIONS_FILE);
   const entryIdGenerator = createArrayGenerator(entryIds);
   return sections.map((sectionTitle, index) => {
     /**
@@ -173,6 +172,13 @@ const generateSections = (entryIds) => {
   });
 };
 
+const escapeURL = (url) => {
+  return encodeURIComponent(url.toLowerCase().replaceAll(" ", "-")).replaceAll(
+    "'",
+    ""
+  );
+};
+
 const run = () => {
   if (LOG_DEBUG) console.time("generateEntries");
   const entries = generateEntries();
@@ -182,12 +188,28 @@ const run = () => {
   }
 
   const sections = generateSections(Object.keys(entries));
-  const categories = readPlaintextFile(CATEGORIES);
+
+  // Create SLUG maps
+  /**
+   * @type {Object.<string, string>}
+   */
+  const categorySlugs = {};
+  readPlaintextFile(CATEGORIES_FILE).forEach((category) => {
+    categorySlugs[category] = escapeURL(category);
+  });
+  /**
+   * @type {Object.<string, string>}
+   */
+  const makeSlugs = {};
+  readPlaintextFile(MAKES_FILE).forEach((make) => {
+    makeSlugs[make] = escapeURL(make);
+  });
 
   const data = {
     entries,
     sections,
-    categories,
+    categorySlugs,
+    makeSlugs,
   };
 
   if (!fs.existsSync(DATA_FILE_PATH)) {
