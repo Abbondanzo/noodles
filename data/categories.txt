@@ -1,0 +1,15 @@
+Anelli
+Cavatappi
+Conchiglie
+Farfalle
+Maccheroni
+Penne
+Capellini
+Rotini
+Spaghetti
+Tagliattelle
+Rigatoni
+Lasagna
+Ramen
+Linguine
+Ravioli
