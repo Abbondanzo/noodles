@@ -19,7 +19,7 @@ const MAX_CATEGORY_COUNT = 5;
 const NUM_ENTRIES_FIRST_SECTION = 12;
 const NUM_ENTRIES_PER_SECTION = 5;
 const MIN_VIEWS = 1e5;
-const MAX_VIEWS = 7.5e6;
+const MAX_VIEWS = 4.5e6;
 
 /**
  * Almost as random as pointing a camera at some lava lamps, but costs far less.
