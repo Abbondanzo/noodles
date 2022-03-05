@@ -7,7 +7,8 @@
   grid-row-gap: 16px
   grid-column-gap: 16px
   padding: 20px 0
-  color: #eee
+  color: #6b6b6b
+  font-size: 12px
 
   @media screen and (min-width: 1200px)
     grid-template-columns: repeat(5, 1fr)
@@ -16,12 +17,17 @@
     display: inline-block
     width: 100%
 
+    div
+      margin-bottom: 4px
+
+    .card-title
+      font-size: 14px
+
     .card-image-wrapper
       width: 100%
       aspect-ratio: 1.8
       overflow: hidden
-      margin-bottom: 4px
 
-    img
-      width: 100%
-      height: auto
+      img
+        width: 100%
+        height: auto

@@ -10,4 +10,7 @@ div.content
             - var imgPath = "/assets/img/noods/" + entry.picture.fileName
             img(src=imgPath)
           - var url = "/entry/" + entry.id
-          a(href=url).card-title= entry.title
+          div.card-title
+            a(href=url)= entry.title
+          div.card-details
+            span= entry.views + " views"

@@ -65,9 +65,19 @@ function* createPictureGenerator() {
  * @typedef {Object} Entry
  * @property {string} id
  * @property {string} title
+ * @property {string} views
  * @property {Array<string>} categories
  * @property {Picture} picture
  */
+
+const generateRandomViewCount = () => {
+  const toAdd = (MAX_VIEWS - MIN_VIEWS) * getRandom();
+  const numViews = MIN_VIEWS + toAdd;
+  if (numViews > 1e6) {
+    return `${Math.round(numViews / 1e5) / 10}M`;
+  }
+  return `${Math.round(numViews / 1e3)}K`;
+};
 
 const generateEntries = () => {
   const titles = readPlaintextFile(TITLES);
@@ -107,6 +117,7 @@ const generateEntries = () => {
       id: entryId,
       title,
       categories: titleCategories,
+      views: generateRandomViewCount(),
       picture,
     };
   });
