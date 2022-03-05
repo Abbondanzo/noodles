@@ -4,7 +4,9 @@ const path = require("path");
 
 // Paths
 const DATA_DIR = path.resolve(__dirname, "..", "data");
+const OUTPUT_DIR = path.resolve(__dirname, "..");
 const CATEGORIES = path.join(DATA_DIR, "categories.txt");
+const SECTIONS = path.join(DATA_DIR, "sections.txt");
 const TITLES = path.join(DATA_DIR, "titles.txt");
 const PICTURES_DIR = path.join(DATA_DIR, "photos");
 
@@ -13,6 +15,9 @@ const LOG_DEBUG = true;
 const CHANCE_TO_INVERT_PICTURE = 0.3;
 const MIN_CATEGORY_COUNT = 2;
 const MAX_CATEGORY_COUNT = 5;
+const NUM_ENTRIES_FIRST_SECTION = 12;
+const NUM_ENTRIES_PER_SECTION = 5;
+const OUTPUT_FILE_NAME = "literally-nosql.json";
 
 /**
  * Almost as random as pointing a camera at some lava lamps, but costs far less.
@@ -102,6 +107,53 @@ const generateEntries = () => {
   return output;
 };
 
+/**
+ * @param {Array<string>} array
+ * @returns {Generator<string, void, void>}
+ */
+function* createArrayGenerator(array) {
+  let currentArray = [...array];
+  while (true) {
+    if (currentArray.length === 0) {
+      currentArray = [...array];
+    }
+    const indexToPop = Math.floor(getRandom() * currentArray.length);
+    const [arrayItem] = currentArray.splice(indexToPop, 1);
+    yield arrayItem;
+  }
+}
+
+/**
+ * @typedef {Object} Section
+ * @property {string} title
+ * @property {Array<string>} entries
+ */
+
+/**
+ * @param {Array<string>} entryIds
+ * @returns {Array<Section>}
+ */
+const generateSections = (entryIds) => {
+  const sections = readPlaintextFile(SECTIONS);
+  const entryIdGenerator = createArrayGenerator(entryIds);
+  return sections.map((sectionTitle, index) => {
+    /**
+     * @type {Array<string>}
+     */
+    const sectionEntryIds = [];
+    let numEntriesInSection =
+      index === 0 ? NUM_ENTRIES_FIRST_SECTION : NUM_ENTRIES_PER_SECTION;
+    while (numEntriesInSection > 0) {
+      sectionEntryIds.push(entryIdGenerator.next().value);
+      numEntriesInSection--;
+    }
+    return {
+      title: sectionTitle,
+      entries: sectionEntryIds,
+    };
+  });
+};
+
 const run = () => {
   if (LOG_DEBUG) console.time("generateEntries");
   const entries = generateEntries();
@@ -109,6 +161,21 @@ const run = () => {
     console.timeEnd("generateEntries");
     console.log(`Generated ${Object.keys(entries).length} entries`);
   }
+
+  const sections = generateSections(Object.keys(entries));
+  const categories = readPlaintextFile(CATEGORIES);
+
+  const data = {
+    entries,
+    sections,
+    categories,
+  };
+
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
+  }
+  const outputFilePath = path.join(OUTPUT_DIR, OUTPUT_FILE_NAME);
+  fs.writeFileSync(outputFilePath, JSON.stringify(data, null, 2) + "\n");
 };
 
 run();
