@@ -7,6 +7,7 @@ div.content
       each entry in section.entries
         li.card
           div.card-image-wrapper
-            - var imgPath = "assets/img/noods/" + entry.picture.fileName
+            - var imgPath = "/assets/img/noods/" + entry.picture.fileName
             img(src=imgPath)
-          a(href="#").card-title= entry.title
+          - var url = "/entry/" + entry.id
+          a(href=url).card-title= entry.title

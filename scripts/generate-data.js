@@ -17,6 +17,8 @@ const MIN_CATEGORY_COUNT = 2;
 const MAX_CATEGORY_COUNT = 5;
 const NUM_ENTRIES_FIRST_SECTION = 12;
 const NUM_ENTRIES_PER_SECTION = 5;
+const MIN_VIEWS = 1e5;
+const MAX_VIEWS = 7.5e6;
 
 /**
  * Almost as random as pointing a camera at some lava lamps, but costs far less.
@@ -61,6 +63,7 @@ function* createPictureGenerator() {
 
 /**
  * @typedef {Object} Entry
+ * @property {string} id
  * @property {string} title
  * @property {Array<string>} categories
  * @property {Picture} picture
@@ -100,7 +103,12 @@ const generateEntries = () => {
 
     const entryId = crypto.randomUUID();
     const picture = pictureGenerator.next().value;
-    output[entryId] = { title, categories: titleCategories, picture };
+    output[entryId] = {
+      id: entryId,
+      title,
+      categories: titleCategories,
+      picture,
+    };
   });
 
   return output;
@@ -125,16 +133,15 @@ function* createArrayGenerator(array) {
 /**
  * @typedef {Object} Section
  * @property {string} title
- * @property {Array<Entry>} entries
+ * @property {Array<string>} entries
  */
 
 /**
  * @param {Array<Entry>} entries
  * @returns {Array<Section>}
  */
-const generateSections = (entries) => {
+const generateSections = (entryIds) => {
   const sections = readPlaintextFile(SECTIONS);
-  const entryIds = Object.keys(entries);
   const entryIdGenerator = createArrayGenerator(entryIds);
   return sections.map((sectionTitle, index) => {
     /**
@@ -145,7 +152,7 @@ const generateSections = (entries) => {
       index === 0 ? NUM_ENTRIES_FIRST_SECTION : NUM_ENTRIES_PER_SECTION;
     while (numEntriesInSection > 0) {
       const entryId = entryIdGenerator.next().value;
-      sectionEntryIds.push(entries[entryId]);
+      sectionEntryIds.push(entryId);
       numEntriesInSection--;
     }
     return {
@@ -163,7 +170,7 @@ const run = () => {
     console.log(`Generated ${Object.keys(entries).length} entries`);
   }
 
-  const sections = generateSections(entries);
+  const sections = generateSections(Object.keys(entries));
   const categories = readPlaintextFile(CATEGORIES);
 
   const data = {

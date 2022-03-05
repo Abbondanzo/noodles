@@ -9,7 +9,18 @@ const buildGlobalContext = () => {
     throw new Error("Data file has not been generated");
   }
   const json = fs.readFileSync(DATA_FILE_PATH);
-  return JSON.parse(json);
+  const rawData = JSON.parse(json);
+
+  const entries = rawData.entries;
+  const sections = rawData.sections.map((section) => ({
+    ...section,
+    entries: section.entries.map((entryId) => rawData.entries[entryId]),
+  }));
+
+  return {
+    entries,
+    sections,
+  };
 };
 
 module.exports = {
