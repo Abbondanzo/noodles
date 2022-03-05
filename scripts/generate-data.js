@@ -1,10 +1,10 @@
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
+const { DATA_FILE_PATH } = require("./shared/data");
 
 // Paths
 const DATA_DIR = path.resolve(__dirname, "..", "data");
-const OUTPUT_DIR = path.resolve(__dirname, "..");
 const CATEGORIES = path.join(DATA_DIR, "categories.txt");
 const SECTIONS = path.join(DATA_DIR, "sections.txt");
 const TITLES = path.join(DATA_DIR, "titles.txt");
@@ -17,7 +17,6 @@ const MIN_CATEGORY_COUNT = 2;
 const MAX_CATEGORY_COUNT = 5;
 const NUM_ENTRIES_FIRST_SECTION = 12;
 const NUM_ENTRIES_PER_SECTION = 5;
-const OUTPUT_FILE_NAME = "literally-nosql.json";
 
 /**
  * Almost as random as pointing a camera at some lava lamps, but costs far less.
@@ -126,15 +125,16 @@ function* createArrayGenerator(array) {
 /**
  * @typedef {Object} Section
  * @property {string} title
- * @property {Array<string>} entries
+ * @property {Array<Entry>} entries
  */
 
 /**
- * @param {Array<string>} entryIds
+ * @param {Array<Entry>} entries
  * @returns {Array<Section>}
  */
-const generateSections = (entryIds) => {
+const generateSections = (entries) => {
   const sections = readPlaintextFile(SECTIONS);
+  const entryIds = Object.keys(entries);
   const entryIdGenerator = createArrayGenerator(entryIds);
   return sections.map((sectionTitle, index) => {
     /**
@@ -144,7 +144,8 @@ const generateSections = (entryIds) => {
     let numEntriesInSection =
       index === 0 ? NUM_ENTRIES_FIRST_SECTION : NUM_ENTRIES_PER_SECTION;
     while (numEntriesInSection > 0) {
-      sectionEntryIds.push(entryIdGenerator.next().value);
+      const entryId = entryIdGenerator.next().value;
+      sectionEntryIds.push(entries[entryId]);
       numEntriesInSection--;
     }
     return {
@@ -162,7 +163,7 @@ const run = () => {
     console.log(`Generated ${Object.keys(entries).length} entries`);
   }
 
-  const sections = generateSections(Object.keys(entries));
+  const sections = generateSections(entries);
   const categories = readPlaintextFile(CATEGORIES);
 
   const data = {
@@ -171,11 +172,10 @@ const run = () => {
     categories,
   };
 
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR);
+  if (!fs.existsSync(DATA_FILE_PATH)) {
+    fs.mkdirSync(DATA_FILE_PATH);
   }
-  const outputFilePath = path.join(OUTPUT_DIR, OUTPUT_FILE_NAME);
-  fs.writeFileSync(outputFilePath, JSON.stringify(data, null, 2) + "\n");
+  fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(data, null, 2) + "\n");
 };
 
 run();
