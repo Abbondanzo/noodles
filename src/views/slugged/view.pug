@@ -3,6 +3,9 @@ extends ../partials/layout
 append config
   - var pageTitle = entry.title
 
+mixin roundedStat(stat)
+  span= typeof stat === "number" && stat > 1000 ? `${Math.round(stat / 1000)}K` : stat
+
 block body
   div.content
     br
@@ -17,5 +20,7 @@ block body
         .stats-row
           .stats #{entry.stats.views} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
           .stats-iteractions
-            span.likes #{entry.stats.likes}
-            span.dislikes #{entry.stats.dislikes}
+            .likes 
+              +roundedStat(entry.stats.likes)
+            .dislikes
+              +roundedStat(entry.stats.dislikes)
