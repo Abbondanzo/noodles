@@ -16,12 +16,13 @@
   "license": "MIT",
   "dependencies": {
     "node-sass": "^7.0.1",
-    "pug": "3.0.2"
+    "pug": "3.0.2",
+    "sharp": "0.30.2"
   },
   "devDependencies": {
     "node-static": "0.7.11"
   },
-  "engines" : { 
-    "node" : ">=14.0.0"
+  "engines": {
+    "node": ">=14.0.0"
   }
 }

@@ -43,6 +43,7 @@ const createNoodsServer = () => {
       req
         .addListener("end", () => {
           req.url = req.url.split("/assets/img/noods")[1];
+          req.url = req.url.replace("/min", "");
           noodPhotoServer.serve(req, res);
         })
         .resume();

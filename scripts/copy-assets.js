@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const sharp = require("sharp");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 
@@ -31,10 +32,27 @@ const copyRecursive = (source, target) => {
   return 0;
 };
 
-const copyNoodPhotos = () => {
+const copyNoodPhotos = async () => {
   const noodsSourceDir = path.join(ROOT_DIR, "data", "photos");
   const noodsTargetDir = path.join(ROOT_DIR, "dist", "assets", "img", "noods");
-  return copyRecursive(noodsSourceDir, noodsTargetDir);
+  const numPhotosCopied = copyRecursive(noodsSourceDir, noodsTargetDir);
+
+  // Compressing files here too
+  if (!fs.existsSync(path.join(noodsTargetDir, "min"))) {
+    fs.mkdirSync(path.join(noodsTargetDir, "min"));
+  }
+  const promises = fs.readdirSync(noodsTargetDir).map((file) => {
+    const filePath = path.join(noodsTargetDir, file);
+    if (!fs.statSync(filePath).isFile()) {
+      return Promise.resolve();
+    }
+    return sharp(filePath)
+      .resize({ width: 200 })
+      .toFile(path.join(noodsTargetDir, "min", file));
+  });
+  await Promise.all(promises);
+
+  return numPhotosCopied;
 };
 
 const copySrcAssets = () => {
@@ -43,7 +61,14 @@ const copySrcAssets = () => {
   return copyRecursive(assetsSourceDir, assetsTargetDir);
 };
 
-let copiedFiles = 0;
-copiedFiles += copyNoodPhotos();
-copiedFiles += copySrcAssets();
-console.log(`Copied ${copiedFiles} files`);
+const run = async () => {
+  let copiedFiles = 0;
+  copiedFiles += await copyNoodPhotos();
+  copiedFiles += copySrcAssets();
+  console.log(`Copied ${copiedFiles} files`);
+};
+
+run().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
