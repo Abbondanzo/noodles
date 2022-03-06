@@ -11,8 +11,8 @@ block body
         each entry in section.entries
           li.card
             div.card-image-wrapper
-              - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}` 
-              - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}` 
+              - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+              - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
               img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
             div.card-title
               - var url = `${baseURL}/view/${entry.id}`

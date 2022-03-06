@@ -1,3 +1,11 @@
-include ../partials/header
+extends ../partials/layout
 
-h1= "Here's a view: " + entry.title
+append config
+  - var pageTitle = entry.title
+
+block body
+  div.content
+    h1.title #{entry.title}
+      p Sample view
+      - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+      img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
