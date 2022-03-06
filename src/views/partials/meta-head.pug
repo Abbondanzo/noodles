@@ -2,11 +2,15 @@ doctype html
 html(lang="en")
   head
     title Nood Pictures
-    link(rel="stylesheet" type="text/css" href=`${baseURL}/styles/main.css`)
-
-    meta(name="msapplication-TileColor" content="#ff9100")
-    meta(name="theme-color" content="#ff9100")
     meta(name="description" content="Spicy nood pictures.")
+    link(rel="stylesheet" type="text/css" href=`${baseURL}/styles/main.css`)
+    meta(name="theme-color" content="#000000")
+    link(rel="apple-touch-icon" sizes="180x180" href=`${baseURL}/assets/img/apple-touch-icon.png`)
+    link(rel="icon" type="image/png" sizes="32x32" href=`${baseURL}/assets/img/favicon-32x32.png`)
+    link(rel="icon" type="image/png" sizes="16x16" href=`${baseURL}/assets/img/favicon-16x16.png`)
+    link(rel="shortcut icon" href=`${baseURL}/assets/img/favicon.ico`)
+    meta(name="msapplication-TileColor" content="#000000")
+    meta(name="msapplication-config" content=`${baseURL}/assets/img/browserconfig.xml`)
 
     script(type="text/javascript").
       const setActivePage = pageName => {

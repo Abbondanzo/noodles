@@ -8,7 +8,7 @@ div.content
         li.card
           div.card-image-wrapper
             - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}` 
-            img(src=imgPath, class={ "inverted": entry.picture.invert })
+            img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
           div.card-title
             - var url = `${baseURL}/view/${entry.id}`
             a(href=url)= entry.title
