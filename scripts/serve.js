@@ -3,14 +3,18 @@ const http = require("http");
 const { Server } = require("node-static");
 const path = require("path");
 const pug = require("pug");
+const { buildGlobalContext } = require("./shared/data");
 
 const VIEWS_PATH = path.join(__dirname, "..", "src", "views");
 const SRC_PATH = path.join(__dirname, "..", "src");
 const DIST_PATH = path.join(__dirname, "..", "dist");
 const PORT = 3000;
 
-const assetServer = new Server(SRC_PATH);
-const distServer = new Server(DIST_PATH);
+const assetServer = new Server(path.join(__dirname, "..", "src"));
+const distServer = new Server(path.join(__dirname, "..", "dist"));
+const noodPhotoServer = new Server(
+  path.join(__dirname, "..", "data", "photos")
+);
 
 try {
   http
@@ -19,7 +23,16 @@ try {
       const reqUrl = req.url.match(/\/$/) ? `${req.url}index` : req.url;
       if (fs.existsSync(path.join(VIEWS_PATH, `${reqUrl}.pug`))) {
         res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(pug.renderFile(path.join(VIEWS_PATH, `${reqUrl}.pug`)));
+        const globalContext = buildGlobalContext();
+        const pugFile = path.join(VIEWS_PATH, `${reqUrl}.pug`);
+        res.end(pug.renderFile(pugFile, globalContext));
+      } else if (req.url.startsWith("/assets/img/noods")) {
+        req
+          .addListener("end", () => {
+            req.url = req.url.split("/assets/img/noods")[1];
+            noodPhotoServer.serve(req, res);
+          })
+          .resume();
       } else if (req.url.startsWith("/assets")) {
         req
           .addListener("end", () => {

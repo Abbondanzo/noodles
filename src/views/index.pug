@@ -1,61 +1,19 @@
 include partials/header
 
 div.content
-  h1.title Hot Nood Videos in the United States
-  ul.card-grid
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
-    li.card
-      div.card-image-wrapper
-        img(src="assets/img/noods/noods.jpg")
-      a(href="#").card-title Hot noods in your area
+  each section in sections
+    h1.title= section.title
+    ul.card-grid
+      each entry in section.entries
+        li.card
+          div.card-image-wrapper
+            - var imgPath = "/assets/img/noods/" + entry.picture.fileName
+            img(src=imgPath)
+          div.card-title
+            - var url = "/view/" + entry.id
+            a(href=url)= entry.title
+          div
+            - var url = "/make/" + makeSlugs[entry.make]
+            a.color-inherit(href=url)= entry.make
+          div
+            span= entry.views + " views"

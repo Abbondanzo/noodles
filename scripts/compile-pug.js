@@ -1,7 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const pug = require("pug");
+const { buildGlobalContext } = require("./shared/data");
 
+// Paths
 const VIEWS_DIR = path.resolve(__dirname, "..", "src", "views");
 const OUTPUT_DIR = path.resolve(__dirname, "..", "dist");
 
@@ -9,6 +11,8 @@ const buildViews = () => {
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR);
   }
+
+  const globalContext = buildGlobalContext();
 
   const pugFileNames = fs
     .readdirSync(VIEWS_DIR)
@@ -22,6 +26,7 @@ const buildViews = () => {
       return {
         name: viewName,
         content: pug.renderFile(fileName, {
+          ...globalContext,
           pretty: true,
           doctype,
         }),
