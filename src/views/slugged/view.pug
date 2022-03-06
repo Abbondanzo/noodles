@@ -5,7 +5,11 @@ append config
 
 block body
   div.content
-    h1.title #{entry.title}
-      p Sample view
+    br
+    .mock-video
       - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
       img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
+      .play-button
+        .play-icon
+    h1.title #{entry.title}
+
