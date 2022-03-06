@@ -172,6 +172,10 @@ const generateSections = (entryIds) => {
   });
 };
 
+/**
+ * @param {string} url
+ * @returns {string}
+ */
 const escapeURL = (url) => {
   return encodeURIComponent(url.toLowerCase().replaceAll(" ", "-")).replaceAll(
     "'",
