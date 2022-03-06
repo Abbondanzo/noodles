@@ -212,8 +212,9 @@ const run = () => {
     makeSlugs,
   };
 
-  if (!fs.existsSync(DATA_FILE_PATH)) {
-    fs.mkdirSync(DATA_FILE_PATH);
+  const dataFileDir = path.join(DATA_FILE_PATH, "..");
+  if (!fs.existsSync(dataFileDir)) {
+    fs.mkdirSync(dataFileDir);
   }
   fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(data, null, 2) + "\n");
 };
