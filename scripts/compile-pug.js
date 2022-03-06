@@ -1,44 +1,51 @@
 const fs = require("fs");
 const path = require("path");
-const pug = require("pug");
-const { buildGlobalContext } = require("./shared/data");
+const { DATA_FILE_PATH } = require("./shared/data");
+const { appRouter } = require("../src/router");
 
 // Paths
 const VIEWS_DIR = path.resolve(__dirname, "..", "src", "views");
 const OUTPUT_DIR = path.resolve(__dirname, "..", "dist");
 
-const buildViews = () => {
+const collectRoutes = () => {
+  /** @type {Array<string>} */
+  const routes = [];
+
+  routes.push(
+    ...fs
+      .readdirSync(VIEWS_DIR)
+      .filter((file) => file.endsWith(".pug"))
+      .map((view) => "/" + view.replace(/\.pug$/, ""))
+  );
+
+  const dataFile = fs.readFileSync(DATA_FILE_PATH);
+  const rawData = JSON.parse(dataFile);
+
+  // All /view/uuid routes by entries
+  routes.push(
+    ...Object.keys(rawData.entries).map((entryId) => `/view/${entryId}`)
+  );
+
+  return routes;
+};
+
+const writeFiles = () => {
+  // Check that /dist exists
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR);
   }
 
-  const globalContext = buildGlobalContext();
-
-  const pugFileNames = fs
-    .readdirSync(VIEWS_DIR)
-    .filter((file) => file.includes(".pug"))
-    .map((view) => view.split(".pug")[0]);
-
-  pugFileNames
-    .map((viewName) => {
-      const fileName = path.resolve(VIEWS_DIR, `${viewName}.pug`);
-      const doctype = viewName === "sitemap" ? "xml" : "html";
-      return {
-        name: viewName,
-        content: pug.renderFile(fileName, {
-          ...globalContext,
-          pretty: true,
-          doctype,
-        }),
-        extension: doctype,
-      };
-    })
-    .map(({ name, content, extension }) => {
-      const fileName = path.resolve(OUTPUT_DIR, `${name}.${extension}`);
-      fs.writeFileSync(fileName, content);
-    });
-
-  return pugFileNames;
+  const routes = collectRoutes();
+  routes.forEach((route) => {
+    const doctype = route === "sitemap" ? "xml" : "html";
+    const html = appRouter(route, { pretty: true, doctype });
+    const fileName = path.join(OUTPUT_DIR, `${route}.${doctype}`);
+    const parentDir = path.join(fileName, "..");
+    if (!fs.existsSync(parentDir)) {
+      fs.mkdirSync(parentDir);
+    }
+    fs.writeFileSync(fileName, html);
+  });
 };
 
-buildViews();
+writeFiles();

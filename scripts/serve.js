@@ -1,51 +1,127 @@
-const fs = require("fs");
 const http = require("http");
 const { Server } = require("node-static");
 const path = require("path");
-const pug = require("pug");
-const { buildGlobalContext } = require("./shared/data");
+const { appRouter } = require("../src/router");
 
-const VIEWS_PATH = path.join(__dirname, "..", "src", "views");
-const SRC_PATH = path.join(__dirname, "..", "src");
-const DIST_PATH = path.join(__dirname, "..", "dist");
 const PORT = 3000;
 
-const assetServer = new Server(path.join(__dirname, "..", "src"));
-const distServer = new Server(path.join(__dirname, "..", "dist"));
-const noodPhotoServer = new Server(
-  path.join(__dirname, "..", "data", "photos")
-);
+/**
+ * @callback ChainableHandler
+ * @param {any} req
+ * @param {any} res
+ * @returns {boolean} if request is handled
+ */
+
+/**
+ * Servers Pug files.
+ *
+ * @returns {ChainableHandler}
+ */
+const createPugServer = () => {
+  return (req, res) => {
+    const maybePugRendered = appRouter(req.url);
+    if (maybePugRendered) {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(maybePugRendered);
+      return true;
+    }
+    return false;
+  };
+};
+
+/**
+ * Serves files from the data/photos directory at root.
+ *
+ * @returns {ChainableHandler}
+ */
+const createNoodsServer = () => {
+  const noodPhotoServer = new Server(
+    path.join(__dirname, "..", "data", "photos")
+  );
+  return (req, res) => {
+    if (req.url.startsWith("/assets/img/noods")) {
+      req
+        .addListener("end", () => {
+          req.url = req.url.split("/assets/img/noods")[1];
+          noodPhotoServer.serve(req, res);
+        })
+        .resume();
+      return true;
+    }
+    return false;
+  };
+};
+
+/**
+ * Serves all assets from the src/assets folder at root.
+ *
+ * @returns {ChainableHandler}
+ */
+const createAssetsServer = () => {
+  const assetServer = new Server(path.join(__dirname, "..", "src"));
+  return (req, res) => {
+    if (req.url.startsWith("/assets")) {
+      req
+        .addListener("end", () => {
+          assetServer.serve(req, res);
+        })
+        .resume();
+      return true;
+    }
+    return false;
+  };
+};
+
+/**
+ * Serves any assets from dist folder at root.
+ *
+ * @returns {ChainableHandler}
+ */
+const createDistServer = () => {
+  const distServer = new Server(path.join(__dirname, "..", "dist"));
+  return (req, res) => {
+    req
+      .addListener("end", () => {
+        distServer.serve(req, res);
+      })
+      .resume();
+    return true;
+  };
+};
+
+/**
+ * Allows you to chain a list of given servers. Will return early on the first server that returns
+ * a true value.
+ *
+ * @param {Array<ChainableHandler>} servers
+ * @returns {ChainableHandler}
+ */
+const serverPipe = (servers) => (req, res) => {
+  for (const server of servers) {
+    if (server(req, res)) {
+      return true;
+    }
+  }
+  return false;
+};
 
 try {
+  const pugServer = createPugServer();
+  const noodsPhotoServer = createNoodsServer();
+  const assetsServer = createAssetsServer();
+  const distServer = createDistServer();
+
+  const rootServer = serverPipe([
+    pugServer,
+    noodsPhotoServer,
+    assetsServer,
+    distServer,
+  ]);
+
   http
     .createServer((req, res) => {
       console.info(req.method, req.url);
-      const reqUrl = req.url.match(/\/$/) ? `${req.url}index` : req.url;
-      if (fs.existsSync(path.join(VIEWS_PATH, `${reqUrl}.pug`))) {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        const globalContext = buildGlobalContext();
-        const pugFile = path.join(VIEWS_PATH, `${reqUrl}.pug`);
-        res.end(pug.renderFile(pugFile, globalContext));
-      } else if (req.url.startsWith("/assets/img/noods")) {
-        req
-          .addListener("end", () => {
-            req.url = req.url.split("/assets/img/noods")[1];
-            noodPhotoServer.serve(req, res);
-          })
-          .resume();
-      } else if (req.url.startsWith("/assets")) {
-        req
-          .addListener("end", () => {
-            assetServer.serve(req, res);
-          })
-          .resume();
-      } else {
-        req
-          .addListener("end", () => {
-            distServer.serve(req, res);
-          })
-          .resume();
-      }
+      rootServer(req, res);
     })
     .listen(PORT);
   console.log(`Listening on port ${PORT}`);
