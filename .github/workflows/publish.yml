@@ -33,9 +33,10 @@ jobs:
         run: |
           git config --local user.name "GitHub Actions Bot"
           git add docs/
-          git commit -m "Publish HTML" -a
+          git commit -m "Publish HTML (`date '+%F %T %Z'`)" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: published
+          force: true
