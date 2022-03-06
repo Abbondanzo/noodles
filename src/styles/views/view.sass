@@ -1,53 +1,61 @@
-.mock-video
+.video-content
   max-width: 1000px
-  aspect-ratio: 1.8
-  overflow: hidden
-  position: relative
 
-  img
-    position: absolute
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%)
-    min-width: 100%
-    pointer-events: none
-    user-select: none
-    &.inverted
-      transform: translate(-50%, -50%) scaleX(-1)
+  .mock-video
+    aspect-ratio: 1.8
+    overflow: hidden
+    position: relative
 
-  .play-button
-    position: absolute
-    top: 50%
-    left: 50%
-    cursor: pointer
-    transform: translate(-50%, -50%)
-    background-color: rgba(0, 0, 0, 0.5)
-    opacity: 0.8
-    border-radius: 50%
-    padding: 32px
+    img
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      min-width: 100%
+      pointer-events: none
+      user-select: none
+      &.inverted
+        transform: translate(-50%, -50%) scaleX(-1)
 
-    &:hover
-      opacity: 1
-      background-color: rgba(0, 0, 0, 0.7)
+    .play-button
+      position: absolute
+      top: 50%
+      left: 50%
+      cursor: pointer
+      transform: translate(-50%, -50%)
+      background-color: rgba(0, 0, 0, 0.5)
+      opacity: 0.8
+      border-radius: 50%
+      padding: 32px
 
-    $icon-width: 40px
-    $icon-height: 42px
-    .play-icon
-      width: $icon-width
-      height: $icon-height
-      border-style: solid
-      border-width: ($icon-height / 2) 0px ($icon-height / 2) ($icon-width)
-      border-color: transparent transparent transparent #fff
-      box-sizing: border-box
-      transform: translateX($icon-width / 8)
+      &:hover
+        opacity: 1
+        background-color: rgba(0, 0, 0, 0.7)
 
-.video-info
-  margin: 16px 0
-  color: #6b6b6b
-  font-weight: bold
+      $icon-width: 40px
+      $icon-height: 42px
+      .play-icon
+        width: $icon-width
+        height: $icon-height
+        border-style: solid
+        border-width: ($icon-height / 2) 0px ($icon-height / 2) ($icon-width)
+        border-color: transparent transparent transparent #fff
+        box-sizing: border-box
+        transform: translateX($icon-width / 8)
 
-  .title
-    color: #fff
-    font-size: 18px
+  .video-info
+    margin: 16px 0
+    color: #6b6b6b
     font-weight: bold
-    margin-bottom: 8px
+    font-size: 14px
+
+    .title
+      color: #fff
+      font-size: 18px
+      font-weight: bold
+      margin-bottom: 8px
+
+
+    .stats-row
+      display: flex
+      justify-content: space-between

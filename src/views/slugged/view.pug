@@ -6,12 +6,16 @@ append config
 block body
   div.content
     br
-    .mock-video
-      - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
-      img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
-      .play-button
-        .play-icon
-    .video-info
-      .title #{entry.title}
-      .stats #{entry.stats.views} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
-
+    .video-content
+      .mock-video
+        - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+        img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
+        .play-button
+          .play-icon
+      .video-info
+        .title #{entry.title}
+        .stats-row
+          .stats #{entry.stats.views} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
+          .stats-iteractions
+            span.likes #{entry.stats.likes}
+            span.dislikes #{entry.stats.dislikes}
