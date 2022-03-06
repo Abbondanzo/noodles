@@ -32,42 +32,41 @@
       .margin-left
         margin-left: 20px
 
-      .link
-        cursor: pointer
-        padding: 20px
-        padding-top: (20px + $underline-height)
-        position: relative
-        border-left: 1px solid transparent
-        border-right: 1px solid transparent
-        white-space: nowrap
-
-        a
+      a
+        .link
+          cursor: pointer
+          padding: 20px
+          padding-top: (20px + $underline-height)
+          position: relative
+          border-left: 1px solid transparent
+          border-right: 1px solid transparent
+          white-space: nowrap
           color: #fff
           font-weight: normal
           font-size: 12px
           text-transform: uppercase
 
-        &:hover
-          border-color: #252525
+          &:hover
+            border-color: #252525
 
-        &:hover::before
-          height: 4px
-
-        &::before
-          content: ""
-          position: absolute
-          background: $primary-color
-          left: -4px
-          right: -4px
-          bottom: -$underline-height
-          height: 0
-          transition: all .25s
-          transition-timing-function: cubic-bezier(0.13, 1, 0.98, 0.98)
-          overflow: hidden
-
-        &.active
-          a
-            font-weight: bold
+          &:hover::before, &.active::before
+            height: 4px
 
           &::before
+            content: ""
+            position: absolute
+            background: $primary-color
+            left: 0
             right: 0
+            bottom: -$underline-height
+            height: 0
+            transition: all .25s
+            transition-timing-function: cubic-bezier(0.13, 1, 0.98, 0.98)
+            overflow: hidden
+
+          &.active
+            a
+              font-weight: bold
+
+            &::before
+              right: 0

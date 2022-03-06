@@ -1,0 +1,11 @@
+block config
+  include ./config
+
+doctype html
+html(lang="en")
+  head
+    block head
+      include ./meta-head
+  body
+    include ./navbar
+    block body

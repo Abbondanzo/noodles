@@ -1,0 +1,21 @@
+navbar#navbar
+  .content
+    .flex-container
+      .logo
+        a(href=`${baseURL}/`)
+          include nood-logo.svg
+      .links
+        - 
+          var pages = [
+            {path: "/", name: "Home"},
+            {path: "/categories", name: "Categories"},
+            {path: "/live-cams", name: "Live Cams"},
+            {path: "/noodstars", name: "Noodstars"},
+            {path: "/community", name: "Community"},
+            {path: "/photos", name: "Photos & GIFs"},
+          ]
+        each page in pages
+          a(href=`${baseURL}${page.path}`)
+            .link#home(class={ "active": page.name === pageTitle })= page.name
+      .cta
+        a(href="#") Upload
