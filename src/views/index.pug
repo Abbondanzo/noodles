@@ -21,4 +21,5 @@ block body
               - var url = `${baseURL}/make/${makeSlugs[entry.make]}`
               a.color-inherit(href=url)= entry.make
             div
-              span= entry.views + " views"
+              span= entry.stats.views + " views"
+              span(style="margin-left:8px")= Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes))) + "%" 
