@@ -11,5 +11,7 @@ block body
       img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
       .play-button
         .play-icon
-    h1.title #{entry.title}
+    .video-info
+      .title #{entry.title}
+      .stats #{entry.views} views | 80% | 1 month ago
 

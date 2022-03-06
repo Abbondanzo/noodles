@@ -9,6 +9,9 @@
     top: 50%
     left: 50%
     transform: translate(-50%, -50%)
+    min-width: 100%
+    pointer-events: none
+    user-select: none
     &.inverted
       transform: translate(-50%, -50%) scaleX(-1)
 
@@ -37,3 +40,14 @@
       border-color: transparent transparent transparent #fff
       box-sizing: border-box
       transform: translateX($icon-width / 8)
+
+.video-info
+  margin: 16px 0
+  color: #6b6b6b
+  font-weight: bold
+
+  .title
+    color: #fff
+    font-size: 18px
+    font-weight: bold
+    margin-bottom: 8px
