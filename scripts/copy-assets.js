@@ -47,7 +47,11 @@ const copyNoodPhotos = async () => {
       return Promise.resolve();
     }
     return sharp(filePath)
-      .resize({ width: 200 })
+      .resize({
+        width: 300,
+        height: 180,
+        fit: sharp.fit.cover,
+      })
       .toFile(path.join(noodsTargetDir, "min", file));
   });
   await Promise.all(promises);
