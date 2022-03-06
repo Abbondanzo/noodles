@@ -26,6 +26,20 @@ const collectRoutes = () => {
     ...Object.keys(rawData.entries).map((entryId) => `/view/${entryId}`)
   );
 
+  // All /category/category-name routes by slugs
+  routes.push(
+    ...Object.keys(rawData.categorySlugs).map(
+      (slugKey) => `/category/${rawData.categorySlugs[slugKey]}`
+    )
+  );
+
+  // All /category/category-name routes by slugs
+  routes.push(
+    ...Object.keys(rawData.makeSlugs).map(
+      (slugKey) => `/make/${rawData.makeSlugs[slugKey]}`
+    )
+  );
+
   return routes;
 };
 
@@ -39,6 +53,12 @@ const writeFiles = () => {
   routes.forEach((route) => {
     const doctype = route === "sitemap" ? "xml" : "html";
     const html = appRouter(route, { pretty: true, doctype });
+
+    if (!html) {
+      console.log(`No HTML content served by route ${route}. Skipping...`);
+      return;
+    }
+
     const fileName = path.join(OUTPUT_DIR, `${route}.${doctype}`);
     const parentDir = path.join(fileName, "..");
     if (!fs.existsSync(parentDir)) {
