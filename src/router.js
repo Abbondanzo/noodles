@@ -72,8 +72,11 @@ const viewEntryRouter = (route, options) => {
 const routerPipe =
   (routers) =>
   (route, options = {}) => {
+    const baseOptions = {
+      baseURL: "",
+    };
     for (const router of routers) {
-      const routerResult = router(route, options);
+      const routerResult = router(route, { ...baseOptions, ...options });
       if (routerResult) {
         return routerResult;
       }

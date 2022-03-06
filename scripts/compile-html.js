@@ -50,9 +50,11 @@ const writeFiles = () => {
   }
 
   const routes = collectRoutes();
+  const baseURL = process.env.BASE_URL || "";
+
   routes.forEach((route) => {
     const doctype = route === "sitemap" ? "xml" : "html";
-    const html = appRouter(route, { pretty: true, doctype });
+    const html = appRouter(route, { pretty: true, doctype, baseURL });
 
     if (!html) {
       console.log(`No HTML content served by route ${route}. Skipping...`);
