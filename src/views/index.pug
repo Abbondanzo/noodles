@@ -1,23 +1,24 @@
-include partials/header
+extends ./partials/layout
 
-div.content
-  each section in sections
-    h1.title= section.title
-    ul.card-grid
-      each entry in section.entries
-        li.card
-          div.card-image-wrapper
-            - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}` 
-            - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}` 
-            img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
-          div.card-title
-            - var url = `${baseURL}/view/${entry.id}`
-            a(href=url)= entry.title
-          div
-            - var url = `${baseURL}/make/${makeSlugs[entry.make]}`
-            a.color-inherit(href=url)= entry.make
-          div
-            span= entry.views + " views"
+append config
+  - var pageTitle = "Home"
 
-script(type="text/javascript").
-  setActivePage("home")
+block body
+  div.content
+    each section in sections
+      h1.title= section.title
+      ul.card-grid
+        each entry in section.entries
+          li.card
+            div.card-image-wrapper
+              - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}` 
+              - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}` 
+              img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
+            div.card-title
+              - var url = `${baseURL}/view/${entry.id}`
+              a(href=url)= entry.title
+            div
+              - var url = `${baseURL}/make/${makeSlugs[entry.make]}`
+              a.color-inherit(href=url)= entry.make
+            div
+              span= entry.views + " views"
