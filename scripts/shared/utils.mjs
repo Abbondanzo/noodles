@@ -52,7 +52,7 @@ export const readPlaintextFile = (fileName) => {
  */
 export const escapeURL = (url) => {
   url = url
-    .replace(/[^A-z0-9\s-]/g, "")
+    .replace(/[^A-Za-z0-9\s-]/g, "")
     .toLowerCase()
     .replace(/\s/g, "-");
   return encodeURIComponent(url);

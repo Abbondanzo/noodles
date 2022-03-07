@@ -24,23 +24,21 @@ const collectRoutes = () => {
   const dataFile = fs.readFileSync(dataOutputFile);
   const rawData = JSON.parse(dataFile);
 
-  // All /view/uuid routes by entries
+  // All /view/entrySlug routes
   routes.push(
-    ...Object.keys(rawData.entries).map((entryId) => `/view/${entryId}`)
+    ...Object.keys(rawData.entries).map((entrySlug) => `/view/${entrySlug}`)
   );
 
-  // All /category/category-name routes by slugs
+  // All /category/categorySlug routes
   routes.push(
-    ...Object.keys(rawData.categorySlugs).map(
-      (slugKey) => `/category/${rawData.categorySlugs[slugKey]}`
+    ...Object.keys(rawData.categories).map(
+      (categorySlug) => `/category/${categorySlug}`
     )
   );
 
-  // All /brand/brand-name routes by slugs
+  // All /brand/brandSlug routes
   routes.push(
-    ...Object.keys(rawData.brandSlugs).map(
-      (slugKey) => `/brand/${rawData.brandSlugs[slugKey]}`
-    )
+    ...Object.keys(rawData.brands).map((brandSlug) => `/brand/${brandSlug}`)
   );
 
   return routes;

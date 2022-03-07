@@ -8,8 +8,8 @@
     "build": "npm run clean && npm run build:assets && npm run build:data && npm run build:sass && npm run build:html",
     "clean": "node ./scripts/clean",
     "build:assets": "node ./scripts/copy-assets",
-    "build:data": "node ./scripts/generate-data",
-    "build:html": "node ./scripts/compile-html",
+    "build:data": "node ./scripts/generate-data.mjs",
+    "build:html": "node ./scripts/compile-html.mjs",
     "build:sass": "node-sass src/styles/main.sass -o dist/styles --output-style compressed"
   },
   "author": "Peter Abbondanzo",
