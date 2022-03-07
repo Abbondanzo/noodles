@@ -1,3 +1,5 @@
+@import variables
+  
 .card-grid
   display: grid
   justify-content: center
@@ -27,6 +29,24 @@
       width: 100%
       aspect-ratio: 1.8
       overflow: hidden
+      position: relative
+      background-color: $video-loading-color
+
+      &:hover::after
+        right: 0
+        transition: all 0.5s
+
+      &::after
+        content: ""
+        position: absolute
+        background: $primary-color
+        left: 0
+        right: 100%
+        top: 0
+        height: 4px
+        transition: all 0s
+        transition-timing-function: linear
+        overflow: hidden
 
       img
         width: 100%
@@ -34,3 +54,5 @@
 
         &.inverted
           transform: scaleX(-1)
+
+        

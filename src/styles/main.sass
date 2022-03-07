@@ -3,6 +3,8 @@
 @import partials
 @import variables
 
+@import views/view
+
 body
   font: 100%
   background: $background
@@ -47,3 +49,13 @@ img
   max-width: $content-width
   width: 100%
   margin: 0 auto
+
+.divider
+  border-top: 1px solid #202020
+
+img.icon
+  display: inline-block
+  width: 24px
+  height: 24px
+  // White filter
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(62deg) brightness(101%) contrast(102%)

@@ -54,6 +54,7 @@ const viewEntryRouter = (route, options) => {
       const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "view.pug");
       return pug.renderFile(pugFile, {
         ...options,
+        ...getContext(),
         entry: selectedEntry,
       });
     }

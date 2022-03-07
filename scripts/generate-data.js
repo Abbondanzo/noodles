@@ -6,7 +6,7 @@ const { DATA_FILE_PATH } = require("./shared/data");
 // Paths
 const DATA_DIR = path.resolve(__dirname, "..", "data");
 const CATEGORIES_FILE = path.join(DATA_DIR, "categories.txt");
-const MAKES_FILE = path.join(DATA_DIR, "makes.txt");
+const BRANDS_FILE = path.join(DATA_DIR, "brands.txt");
 const SECTIONS_FILE = path.join(DATA_DIR, "sections.txt");
 const TITLES_FILE = path.join(DATA_DIR, "titles.txt");
 const PICTURES_DIR = path.join(DATA_DIR, "photos");
@@ -18,14 +18,33 @@ const MIN_CATEGORY_COUNT = 2;
 const MAX_CATEGORY_COUNT = 5;
 const NUM_ENTRIES_FIRST_SECTION = 12;
 const NUM_ENTRIES_PER_SECTION = 5;
+// Stats Variables
 const MIN_VIEWS = 1e5;
 const MAX_VIEWS = 4.5e6;
+const MIN_DAYS_UPLOADED = 1;
+const MAX_DAYS_UPLOADED = 30 * 9;
+const MIN_LIKE_RATIO = 0.7;
+const MAX_LIKE_RATIO = 0.99;
+const MIN_LIKES = 150;
+const MAX_LIKES = 5e3;
+const MIN_FAVORITES = 50;
+const MAX_FAVORITES = 1.5e3;
 
 /**
  * Almost as random as pointing a camera at some lava lamps, but costs far less.
  * @returns {number}
  */
 const getRandom = () => Math.sqrt(Math.random() * Math.random());
+
+/**
+ * @param {number} min
+ * @param {number} max
+ * @returns {number}
+ */
+const getRandomInRange = (min, max) => {
+  if (min >= max) throw new Error("Minimum must be less than maximum");
+  return min + getRandom() * (max - min);
+};
 
 /**
  * @param {Array<string>} array
@@ -62,22 +81,55 @@ const readPlaintextFile = (fileName) => {
  */
 
 /**
+ * @typedef Stats
+ * @property {string} views
+ * @property {string} uploadTime
+ * @property {number} likes
+ * @property {number} dislikes
+ * @property {number} favorites
+ */
+
+/**
  * @typedef {Object} Entry
  * @property {string} id
- * @property {string} make
+ * @property {string} brand
  * @property {string} title
- * @property {string} views
+ * @property {Stats} stats
  * @property {Array<string>} categories
  * @property {Picture} picture
  */
 
 const generateRandomViewCount = () => {
-  const toAdd = (MAX_VIEWS - MIN_VIEWS) * getRandom();
-  const numViews = MIN_VIEWS + toAdd;
+  const numViews = getRandomInRange(MIN_VIEWS, MAX_VIEWS);
   if (numViews > 1e6) {
     return `${Math.round(numViews / 1e5) / 10}M`;
   }
   return `${Math.round(numViews / 1e3)}K`;
+};
+
+const generateRandomUploadTime = () => {
+  const daysAgo = getRandomInRange(MIN_DAYS_UPLOADED, MAX_DAYS_UPLOADED);
+  if (daysAgo > 30) {
+    const months = Math.round(daysAgo / 30);
+    return `${months} ${months === 1 ? "month" : "months"} ago`;
+  }
+  const days = Math.round(daysAgo);
+  return `${days} ${days === 1 ? "day" : "days"} ago`;
+};
+
+/** @returns {Stats} */
+const generateStats = () => {
+  const likes = Math.floor(getRandomInRange(MIN_LIKES, MAX_LIKES));
+  const likeRatio = getRandomInRange(MIN_LIKE_RATIO, MAX_LIKE_RATIO);
+  const dislikes = Math.round(likes / likeRatio - likes);
+  const favorites = Math.round(getRandomInRange(MIN_FAVORITES, MAX_FAVORITES));
+  return {
+    views: generateRandomViewCount(),
+    uploadTime: generateRandomUploadTime(),
+    likes,
+    dislikes,
+    favorites,
+  };
 };
 
 const generateEntries = () => {
@@ -87,8 +139,8 @@ const generateEntries = () => {
   const pictureFiles = fs.readdirSync(PICTURES_DIR);
   const pictureGenerator = createArrayGenerator(pictureFiles);
 
-  const makes = readPlaintextFile(MAKES_FILE);
-  const makesGenerator = createArrayGenerator(makes);
+  const brands = readPlaintextFile(BRANDS_FILE);
+  const brandsGenerator = createArrayGenerator(brands);
 
   /**
    * @type {Object.<string, Entry>}
@@ -130,9 +182,9 @@ const generateEntries = () => {
     output[entryId] = {
       id: entryId,
       title,
-      make: makesGenerator.next().value,
+      brand: brandsGenerator.next().value,
       categories: titleCategories,
-      views: generateRandomViewCount(),
+      stats: generateStats(),
       picture,
     };
   });
@@ -204,16 +256,16 @@ const run = () => {
   /**
    * @type {Object.<string, string>}
    */
-  const makeSlugs = {};
-  readPlaintextFile(MAKES_FILE).forEach((make) => {
-    makeSlugs[make] = escapeURL(make);
+  const brandSlugs = {};
+  readPlaintextFile(BRANDS_FILE).forEach((brand) => {
+    brandSlugs[brand] = escapeURL(brand);
   });
 
   const data = {
     entries,
     sections,
     categorySlugs,
-    makeSlugs,
+    brandSlugs,
   };
 
   const dataFileDir = path.join(DATA_FILE_PATH, "..");
