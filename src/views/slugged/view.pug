@@ -13,19 +13,28 @@ block body
       .mock-video
         - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
         img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
-        .play-button
+        .play-button.pseudo-interactive
           .play-icon
       .video-info
         .title #{entry.title}
         .stats-row
           .stats #{entry.stats.views} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
           .stats-iteractions
-            .likes 
+            .likes.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/thumbs-up.svg`)
               +roundedStat(entry.stats.likes)
-            .dislikes
+            .dislikes.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/thumbs-down.svg`)
               +roundedStat(entry.stats.dislikes)
-            .favorites
+            .favorites.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/heart.svg`)
               +roundedStat(entry.stats.favorites)
+            .add.pseudo-interactive
+              img.icon(src=`${baseURL}/assets/icons/add.svg`)
+              span Add
+            .fast-forward.pseudo-interactive
+              img.icon(src=`${baseURL}/assets/icons/fast-forward.svg`)
+              span Forward to
+            .report.pseudo-interactive
+              img.icon(src=`${baseURL}/assets/icons/flag.svg`)
+              span Report
