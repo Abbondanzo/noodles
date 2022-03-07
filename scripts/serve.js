@@ -19,13 +19,20 @@ const PORT = 3000;
  */
 const createPugServer = () => {
   return (req, res) => {
-    const maybePugRendered = appRouter(req.url);
-    if (maybePugRendered) {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(maybePugRendered);
+    try {
+      const maybePugRendered = appRouter(req.url);
+      if (maybePugRendered) {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(maybePugRendered);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error(error);
+      res.writeHead(500);
+      res.end();
       return true;
     }
-    return false;
   };
 };
 
