@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { DATA_FILE_PATH } = require("./shared/data");
+const { dataOutputFile } = require("./shared/paths.mjs");
 const { appRouter } = require("../src/router");
 
 // Paths
@@ -18,7 +18,7 @@ const collectRoutes = () => {
       .map((view) => "/" + view.replace(/\.pug$/, ""))
   );
 
-  const dataFile = fs.readFileSync(DATA_FILE_PATH);
+  const dataFile = fs.readFileSync(dataOutputFile);
   const rawData = JSON.parse(dataFile);
 
   // All /view/uuid routes by entries

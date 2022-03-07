@@ -1,6 +1,9 @@
 import { sections } from "../shared/rawData.mjs";
 import { createArrayGenerator } from "../shared/utils.mjs";
 
+const NUM_ENTRIES_FIRST_SECTION = 12;
+const NUM_ENTRIES_PER_SECTION = 5;
+
 /**
  * @typedef {Object} Section
  * @property {string} title

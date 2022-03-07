@@ -64,11 +64,11 @@ export const generateEntries = (brandSlugs, categorySlugs) => {
       Math.floor(getRandom() * (MAX_CATEGORY_COUNT - MIN_CATEGORY_COUNT)) +
       MIN_CATEGORY_COUNT;
     while (titleCategories.length < minCategoriesToAdd) {
-      if (minCategoriesToAdd > categories.length) {
+      if (minCategoriesToAdd > categorySlugs.length) {
         break;
       }
       // O(n^2) because I like exponential numbers
-      const remainingCategories = categories.filter(
+      const remainingCategories = categorySlugs.filter(
         (category) => !titleCategories.includes(category)
       );
       const remainingCategoryIndex = Math.floor(
@@ -98,5 +98,3 @@ export const generateEntries = (brandSlugs, categorySlugs) => {
 
   return output;
 };
-
-console.log(Object.keys(generateEntries()));
