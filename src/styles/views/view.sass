@@ -55,14 +55,23 @@
       font-weight: bold
       margin-bottom: 8px
 
-
     .stats-row
       display: flex
       justify-content: space-between
+
+      .icon
+        width: 16px
+        height: 16px
+        margin-right: 4px
 
       .stats-iteractions
         display: flex
         color: #fff
 
         & > *
-          margin-left: 8px
+          cursor: pointer
+          margin-left: 16px
+          display: flex
+          align-items: center
+          &:hover
+            opacity: 0.8

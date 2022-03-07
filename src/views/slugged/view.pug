@@ -21,6 +21,8 @@ block body
           .stats #{entry.stats.views} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
           .stats-iteractions
             .likes 
+              img.icon(src=`${baseURL}/assets/icons/thumbs-up.svg`)
               +roundedStat(entry.stats.likes)
             .dislikes
+              img.icon(src=`${baseURL}/assets/icons/thumbs-down.svg`)
               +roundedStat(entry.stats.dislikes)
