@@ -9,14 +9,15 @@ block body
       h1.title= section.title
       ul.card-grid
         each entry in section.entries
+          - var entryURL = `${baseURL}/view/${entry.id}`
           li.card
-            div.card-image-wrapper
-              - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
-              - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
-              img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
+            a(href=entryURL)
+              div.card-image-wrapper
+                - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+                - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
+                img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
             div.card-title
-              - var url = `${baseURL}/view/${entry.id}`
-              a(href=url)= entry.title
+              a(href=entryURL)= entry.title
             div
               - var url = `${baseURL}/make/${makeSlugs[entry.make]}`
               a.color-inherit(href=url)= entry.make
