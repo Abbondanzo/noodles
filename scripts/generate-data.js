@@ -27,6 +27,8 @@ const MIN_LIKE_RATIO = 0.7;
 const MAX_LIKE_RATIO = 0.99;
 const MIN_LIKES = 150;
 const MAX_LIKES = 5e3;
+const MIN_FAVORITES = 50;
+const MAX_FAVORITES = 1.5e3;
 
 /**
  * Almost as random as pointing a camera at some lava lamps, but costs far less.
@@ -84,6 +86,7 @@ const readPlaintextFile = (fileName) => {
  * @property {string} uploadTime
  * @property {number} likes
  * @property {number} dislikes
+ * @property {number} favorites
  */
 
 /**
@@ -119,11 +122,13 @@ const generateStats = () => {
   const likes = Math.floor(getRandomInRange(MIN_LIKES, MAX_LIKES));
   const likeRatio = getRandomInRange(MIN_LIKE_RATIO, MAX_LIKE_RATIO);
   const dislikes = Math.round(likes / likeRatio - likes);
+  const favorites = Math.round(getRandomInRange(MIN_FAVORITES, MAX_FAVORITES));
   return {
     views: generateRandomViewCount(),
     uploadTime: generateRandomUploadTime(),
     likes,
     dislikes,
+    favorites,
   };
 };
 
