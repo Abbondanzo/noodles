@@ -33,10 +33,10 @@ const collectRoutes = () => {
     )
   );
 
-  // All /category/category-name routes by slugs
+  // All /brand/brand-name routes by slugs
   routes.push(
-    ...Object.keys(rawData.makeSlugs).map(
-      (slugKey) => `/make/${rawData.makeSlugs[slugKey]}`
+    ...Object.keys(rawData.brandSlugs).map(
+      (slugKey) => `/brand/${rawData.brandSlugs[slugKey]}`
     )
   );
 

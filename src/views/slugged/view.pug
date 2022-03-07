@@ -39,6 +39,6 @@ block body
               img.icon(src=`${baseURL}/assets/icons/flag.svg`)
               span Report
       .divider
-      .make-info
-        - var url = `${baseURL}/make/${makeSlugs[entry.make]}`
-        a.color-inherit(href=url)= entry.make
+      .brand-info
+        - var url = `${baseURL}/brand/${brandSlugs[entry.brand]}`
+        a.color-inherit(href=url)= entry.brand
