@@ -1,11 +1,14 @@
-const fs = require("fs");
-const path = require("path");
-const { DATA_FILE_PATH } = require("./shared/data");
-const { appRouter } = require("../src/router");
+import fs from "fs";
+import path from "path";
+import router from "../src/router.js";
+import { dataOutputFile } from "./shared/paths.mjs";
+import { getDirname } from "./shared/utils.mjs";
+
+const dirname = getDirname(import.meta.url);
 
 // Paths
-const VIEWS_DIR = path.resolve(__dirname, "..", "src", "views");
-const OUTPUT_DIR = path.resolve(__dirname, "..", "dist");
+const VIEWS_DIR = path.resolve(dirname, "..", "src", "views");
+const OUTPUT_DIR = path.resolve(dirname, "..", "dist");
 
 const collectRoutes = () => {
   /** @type {Array<string>} */
@@ -18,7 +21,7 @@ const collectRoutes = () => {
       .map((view) => "/" + view.replace(/\.pug$/, ""))
   );
 
-  const dataFile = fs.readFileSync(DATA_FILE_PATH);
+  const dataFile = fs.readFileSync(dataOutputFile);
   const rawData = JSON.parse(dataFile);
 
   // All /view/uuid routes by entries
@@ -54,7 +57,7 @@ const writeFiles = () => {
 
   routes.forEach((route) => {
     const doctype = route === "sitemap" ? "xml" : "html";
-    const html = appRouter(route, { pretty: true, doctype, baseURL });
+    const html = router.appRouter(route, { pretty: true, doctype, baseURL });
 
     if (!html) {
       console.log(`No HTML content served by route ${route}. Skipping...`);

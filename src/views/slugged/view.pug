@@ -11,7 +11,7 @@ block body
     br
     .video-content
       .mock-video
-        - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+        - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
         img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
         .play-button.pseudo-interactive
           .play-icon
@@ -40,5 +40,5 @@ block body
               span Report
       .divider
       .brand-info
-        - var url = `${baseURL}/brand/${brandSlugs[entry.brand]}`
-        a.color-inherit(href=url)= entry.brand
+        - const brandUrl = `${baseURL}/brand/${entry.brandSlug}`
+        a.color-inherit(href=brandUrl)= brands[entry.brandSlug].name

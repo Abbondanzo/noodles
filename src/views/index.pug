@@ -8,19 +8,20 @@ block body
     each section in sections
       h1.title= section.title
       ul.card-grid
-        each entry in section.entries
-          - var entryURL = `${baseURL}/view/${entry.id}`
+        each entryId in section.entries
+          - const entry = entries[entryId]
+          - const entryURL = `${baseURL}/view/${entry.slug}`
           li.card
             a(href=entryURL)
               div.card-image-wrapper
-                - var imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
-                - var minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
+                - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+                - const minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
                 img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
             div.card-title
               a(href=entryURL)= entry.title
             div
-              - var url = `${baseURL}/brand/${brandSlugs[entry.brand]}`
-              a.color-inherit(href=url)= entry.brand
+              - const brandUrl = `${baseURL}/brand/${entry.brandSlug}`
+              a.color-inherit(href=brandUrl)= brands[entry.brandSlug].name
             div
               span= entry.stats.views + " views"
               span(style="margin-left:8px")= Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes))) + "%" 
