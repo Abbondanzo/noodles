@@ -1,27 +1,14 @@
 extends ./partials/layout
+include ./mixins/card
 
 append config
   - var pageTitle = "Home"
 
 block body
-  div.content
+  div.content.content-index
     each section in sections
       h1.title= section.title
       ul.card-grid
         each entryId in section.entries
           - const entry = entries[entryId]
-          - const entryURL = `${baseURL}/view/${entry.slug}`
-          li.card
-            a(href=entryURL)
-              div.card-image-wrapper
-                - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
-                - const minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
-                img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
-            div.card-title
-              a(href=entryURL)= entry.title
-            div
-              - const brandUrl = `${baseURL}/brand/${entry.brandSlug}`
-              a.color-inherit(href=brandUrl)= brands[entry.brandSlug].name
-            div
-              span= entry.stats.views + " views"
-              span(style="margin-left:8px")= Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes))) + "%" 
+          +card(entry)

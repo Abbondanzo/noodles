@@ -1,15 +1,12 @@
 extends ../partials/layout
+include ../mixins/card
 
 append config
   - var pageTitle = entry.title
 
-mixin roundedStat(stat)
-  span= typeof stat === "number" && stat > 1000 ? `${Math.round(stat / 1000)}K` : stat
-
 block body
-  div.content
-    br
-    .video-content
+  div.content.content-view
+    .video-column
       .mock-video
         - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
         img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
@@ -18,17 +15,17 @@ block body
       .video-info
         .title #{entry.title}
         .stats-row
-          .stats #{entry.stats.views} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
+          .stats #{truncateNumber(entry.stats.views)} views | #{Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes)))}% | #{entry.stats.uploadTime}
           .stats-iteractions
             .likes.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/thumbs-up.svg`)
-              +roundedStat(entry.stats.likes)
+              span= truncateNumber(entry.stats.likes)
             .dislikes.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/thumbs-down.svg`)
-              +roundedStat(entry.stats.dislikes)
+              span= truncateNumber(entry.stats.dislikes)
             .favorites.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/heart.svg`)
-              +roundedStat(entry.stats.favorites)
+              span= truncateNumber(entry.stats.favorites)
             .add.pseudo-interactive
               img.icon(src=`${baseURL}/assets/icons/add.svg`)
               span Add
@@ -39,6 +36,32 @@ block body
               img.icon(src=`${baseURL}/assets/icons/flag.svg`)
               span Report
       .divider
-      .brand-info
-        - const brandUrl = `${baseURL}/brand/${entry.brandSlug}`
-        a.color-inherit(href=brandUrl)= brands[entry.brandSlug].name
+      .brand-row
+        .brand-avatar #{brand.name[0]}
+        .brand-info
+          .brand-name
+            - const brandUrl = `${baseURL}/brand/${brand.slug}`
+            a.color-inherit(href=brandUrl)= brand.name
+          span #{numBrandVideos} Videos | #{truncateNumber(brand.subscribers)} Subscribers
+        .subscribe.pseudo-interactive Subscribe
+      .divider
+      .categories-row
+        .title Categories
+        .categories
+          each categorySlug in entry.categorySlugs
+            - const categoryUrl = `${baseURL}/category/${categorySlug}`
+            a(href=categoryUrl)
+              .category= categories[categorySlug].name
+      .divider
+      .related-videos-row
+        .title Related Noods
+        ul.card-grid
+          each entry in relatedVideos
+            +card(entry)
+      .divider
+    .sidebar-column
+      .title Recommended
+      .sidebar-videos
+        ul.card-grid
+          each entry in sidebarVideos
+            +card(entry, true)
