@@ -33,8 +33,13 @@
       background-color: $video-loading-color
 
       &:hover::after
-        right: 0
-        transition: all 0.5s
+        @keyframes loadingIndicator
+          from
+            right: 100%
+          to
+            right: 0
+        animation-duration: 0.5s
+        animation-name: loadingIndicator
 
       &::after
         content: ""
