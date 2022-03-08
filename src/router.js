@@ -67,6 +67,7 @@ const viewEntryRouter = (route, options) => {
         entry: selectedEntry,
         brand,
         numBrandVideos,
+        roundedStat: (stats) => stats,
       });
     }
   }

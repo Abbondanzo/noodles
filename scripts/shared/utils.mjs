@@ -11,11 +11,13 @@ export const getRandom = () => Math.sqrt(Math.random() * Math.random());
 /**
  * @param {number} min
  * @param {number} max
+ * @param {boolean} round
  * @returns {number}
  */
-export const getRandomInRange = (min, max) => {
+export const getRandomInRange = (min, max, round = true) => {
   if (min >= max) throw new Error("Minimum must be less than maximum");
-  return min + getRandom() * (max - min);
+  const randomNum = min + getRandom() * (max - min);
+  return round ? Math.round(randomNum) : randomNum;
 };
 
 /**

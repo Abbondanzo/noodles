@@ -13,20 +13,12 @@ const MAX_FAVORITES = 1.5e3;
 
 /**
  * @typedef Stats
- * @property {string} views
  * @property {string} uploadTime
+ * @property {number} views
  * @property {number} likes
  * @property {number} dislikes
  * @property {number} favorites
  */
-
-const generateRandomViewCount = () => {
-  const numViews = getRandomInRange(MIN_VIEWS, MAX_VIEWS);
-  if (numViews > 1e6) {
-    return `${Math.round(numViews / 1e5) / 10}M`;
-  }
-  return `${Math.round(numViews / 1e3)}K`;
-};
 
 const generateRandomUploadTime = () => {
   const daysAgo = getRandomInRange(MIN_DAYS_UPLOADED, MAX_DAYS_UPLOADED);
@@ -40,13 +32,14 @@ const generateRandomUploadTime = () => {
 
 /** @returns {Stats} */
 export const generateStats = () => {
-  const likes = Math.floor(getRandomInRange(MIN_LIKES, MAX_LIKES));
-  const likeRatio = getRandomInRange(MIN_LIKE_RATIO, MAX_LIKE_RATIO);
+  const views = getRandomInRange(MIN_VIEWS, MAX_VIEWS);
+  const likes = getRandomInRange(MIN_LIKES, MAX_LIKES);
+  const likeRatio = getRandomInRange(MIN_LIKE_RATIO, MAX_LIKE_RATIO, false);
   const dislikes = Math.round(likes / likeRatio - likes);
-  const favorites = Math.round(getRandomInRange(MIN_FAVORITES, MAX_FAVORITES));
+  const favorites = getRandomInRange(MIN_FAVORITES, MAX_FAVORITES);
   return {
-    views: generateRandomViewCount(),
     uploadTime: generateRandomUploadTime(),
+    views,
     likes,
     dislikes,
     favorites,
