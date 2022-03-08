@@ -1,155 +1,178 @@
 @import "../variables"
-  
-.video-content
-  max-width: 1000px
 
-  .mock-video
-    aspect-ratio: 1.8
-    overflow: hidden
-    position: relative
-    background-color: $video-loading-color
+.content-view
+  display: flex
 
-    img
-      position: absolute
-      top: 50%
-      left: 50%
-      transform: translate(-50%, -50%)
-      min-width: 100%
-      pointer-events: none
-      user-select: none
-      &.inverted
-        transform: translate(-50%, -50%) scaleX(-1)
-
-    .play-button
-      position: absolute
-      top: 50%
-      left: 50%
-      cursor: pointer
-      transform: translate(-50%, -50%)
-      background-color: rgba(0, 0, 0, 0.5)
-      opacity: 0.8
-      border-radius: 50%
-      padding: 32px
-
-      &:hover
-        opacity: 1
-        background-color: rgba(0, 0, 0, 0.7)
-
-      $icon-width: 40px
-      $icon-height: 42px
-      .play-icon
-        width: $icon-width
-        height: $icon-height
-        border-style: solid
-        border-width: ($icon-height / 2) 0px ($icon-height / 2) ($icon-width)
-        border-color: transparent transparent transparent #fff
-        box-sizing: border-box
-        transform: translateX($icon-width / 8)
-
-  .video-info
-    margin: 16px
-    color: #6b6b6b
-    font-weight: bold
-    font-size: 14px
-
-    .title
-      color: #fff
-      font-size: 18px
-      font-weight: bold
-      margin-bottom: 8px
-
-    .stats-row
-      display: flex
-      justify-content: space-between
-
-      .icon
-        width: 16px
-        height: 16px
-        margin-right: 4px
-
-      .stats-iteractions
-        display: flex
-        color: #ccc
-        font-weight: normal
-        font-size: 12px
-
-        & > *
-          cursor: pointer
-          margin-left: 16px
-          display: flex
-          align-items: center
-          &:hover
-            opacity: 0.8
-
-  .brand-row
-    margin: 24px 16px
-    display: flex
-    align-items: center
-
-    .brand-avatar
-      display: flex
-      align-items: center
+  .card-grid
+      display: grid
       justify-content: center
-      background-color: #6e6e6e
-      width: 36px
-      height: 36px
-      border-radius: 50%
-      margin-right: 8px
-      font-weight: bold
-      font-size: 20px
+      align-content: center
+      grid-template-rows: auto
+      grid-template-columns: repeat(4, 1fr)
+      grid-row-gap: 16px
+      grid-column-gap: 16px
 
-    .brand-info
+  .video-column
+    max-width: 1000px
+
+    .mock-video
+      aspect-ratio: 1.8
+      overflow: hidden
+      position: relative
+      background-color: $video-loading-color
+
+      img
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        min-width: 100%
+        pointer-events: none
+        user-select: none
+        &.inverted
+          transform: translate(-50%, -50%) scaleX(-1)
+
+      .play-button
+        position: absolute
+        top: 50%
+        left: 50%
+        cursor: pointer
+        transform: translate(-50%, -50%)
+        background-color: rgba(0, 0, 0, 0.5)
+        opacity: 0.8
+        border-radius: 50%
+        padding: 32px
+
+        &:hover
+          opacity: 1
+          background-color: rgba(0, 0, 0, 0.7)
+
+        $icon-width: 40px
+        $icon-height: 42px
+        .play-icon
+          width: $icon-width
+          height: $icon-height
+          border-style: solid
+          border-width: ($icon-height / 2) 0px ($icon-height / 2) ($icon-width)
+          border-color: transparent transparent transparent #fff
+          box-sizing: border-box
+          transform: translateX($icon-width / 8)
+
+    .video-info
+      margin: 16px
       color: #6b6b6b
       font-weight: bold
       font-size: 14px
 
-      .brand-name
+      .title
         color: #fff
         font-size: 18px
+        font-weight: bold
+        margin-bottom: 8px
 
-    .subscribe
-      float: right
-      margin-left: auto
-      border: 1px solid #222
-      border-radius: 4px
-      color: #fff
-      min-width: 150px
-      font-weight: 500
-      font-size: 16px
-      line-height: 40px
-      text-align: center
-      box-sizing: border-box
-      cursor: pointer
+      .stats-row
+        display: flex
+        justify-content: space-between
 
-      &:hover
-        border-color: $primary-color
-        color: $primary-color
+        .icon
+          width: 16px
+          height: 16px
+          margin-right: 4px
 
-  .categories-row
-    margin: 16px
+        .stats-iteractions
+          display: flex
+          color: #ccc
+          font-weight: normal
+          font-size: 12px
 
-    .title
-      font-weight: bold
-      font-size: 14px
+          & > *
+            cursor: pointer
+            margin-left: 16px
+            display: flex
+            align-items: center
+            &:hover
+              opacity: 0.8
 
-    .categories
-      margin-top: 8px
+    .brand-row
+      margin: 24px 16px
+      display: flex
+      align-items: center
 
-      .category
-        display: inline-block
-        cursor: pointer
-        background-color: #222
-        padding: 8px
+      .brand-avatar
+        display: flex
+        align-items: center
+        justify-content: center
+        background-color: #6e6e6e
+        width: 36px
+        height: 36px
+        border-radius: 50%
+        margin-right: 8px
+        font-weight: bold
+        font-size: 20px
+
+      .brand-info
+        color: #6b6b6b
+        font-weight: bold
+        font-size: 14px
+
+        .brand-name
+          color: #fff
+          font-size: 18px
+
+      .subscribe
+        float: right
+        margin-left: auto
+        border: 1px solid #222
         border-radius: 4px
-        font-size: 12px
-        margin-right: 4px
+        color: #fff
+        min-width: 150px
+        font-weight: 500
+        font-size: 16px
+        line-height: 40px
+        text-align: center
+        box-sizing: border-box
+        cursor: pointer
 
         &:hover
-          opacity: 0.8
+          border-color: $primary-color
+          color: $primary-color
 
-  .related-videos-row
-    margin: 16px
+    .categories-row
+      margin: 16px
 
-    .title
-      font-weight: bold
-      font-size: 14px
+      .title
+        font-weight: bold
+        font-size: 14px
+
+      .categories
+        margin-top: 8px
+
+        .category
+          display: inline-block
+          cursor: pointer
+          background-color: #222
+          padding: 8px
+          border-radius: 4px
+          font-size: 12px
+          margin-right: 4px
+
+          &:hover
+            opacity: 0.8
+
+    .related-videos-row
+      margin: 16px
+
+      .card-grid
+        grid-template-columns: repeat(3, 1fr)
+
+      .title
+        font-weight: bold
+        font-size: 14px
+
+  .sidebar-column
+    margin-left: 16px
+
+    .sidebar-videos
+      .card-grid
+        grid-template-columns: repeat(1, 1fr)
+    

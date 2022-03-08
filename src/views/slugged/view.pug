@@ -5,9 +5,8 @@ append config
   - var pageTitle = entry.title
 
 block body
-  div.content
-    br
-    .video-content
+  div.content.content-view
+    .video-column
       .mock-video
         - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
         img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
@@ -55,8 +54,14 @@ block body
               .category= categories[categorySlug].name
       .divider
       .related-videos-row
-        .title Related Videos
+        .title Related Noods
         ul.card-grid
           each entry in relatedVideos
             +card(entry)
       .divider
+    .sidebar-column
+      .title Recommended
+      .sidebar-videos
+        ul.card-grid
+          each entry in sidebarVideos
+            +card(entry, true)
