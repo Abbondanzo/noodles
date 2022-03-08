@@ -39,6 +39,50 @@ const pugFileRouter = (route, options) => {
 };
 
 /**
+ * @type {Router}
+ */
+const brandRouter = (route, options) => {
+  const match = route.match(/brand\/([A-z0-9-]+)\/?/);
+  if (match) {
+    const matchingId = match[1];
+    const context = getContext();
+    const selectedBrand = context.brands[matchingId];
+    if (selectedBrand) {
+      const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "brand.pug");
+      return pug.renderFile(pugFile, {
+        ...options,
+        ...context,
+        brand: selectedBrand,
+      });
+    }
+  }
+
+  return null;
+};
+
+/**
+ * @type {Router}
+ */
+const categoryRouter = (route, options) => {
+  const match = route.match(/category\/([A-z0-9-]+)\/?/);
+  if (match) {
+    const matchingId = match[1];
+    const context = getContext();
+    const selectedCategory = context.categories[matchingId];
+    if (selectedCategory) {
+      const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "category.pug");
+      return pug.renderFile(pugFile, {
+        ...options,
+        ...context,
+        category: selectedCategory,
+      });
+    }
+  }
+
+  return null;
+};
+
+/**
  * Tries to match any view entry by the given path. For example:
  * - `/view/my-uuid` will render an entry if one exists by the ID `my-uuid`.
  *
@@ -105,7 +149,12 @@ const routerPipe =
     return null;
   };
 
-const appRouter = routerPipe([pugFileRouter, viewEntryRouter]);
+const appRouter = routerPipe([
+  pugFileRouter,
+  brandRouter,
+  categoryRouter,
+  viewEntryRouter,
+]);
 
 module.exports = {
   appRouter,
