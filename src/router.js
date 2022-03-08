@@ -60,14 +60,22 @@ const viewEntryRouter = (route, options) => {
         )
         .map((entrySlug) => context.entries[entrySlug]);
       const numBrandVideos = relatedVideos.length + 1;
+      const recommendedSection =
+        context.sections.find((section) =>
+          section.title.toLowerCase().includes("recommended")
+        ) || context.sections[0];
+      const sidebarVideos = recommendedSection.entries
+        .slice(0, 5)
+        .map((entrySlug) => context.entries[entrySlug]);
       const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "view.pug");
       return pug.renderFile(pugFile, {
         ...options,
         ...context,
         entry: selectedEntry,
         brand,
-        relatedVideos,
+        sidebarVideos,
         numBrandVideos,
+        relatedVideos,
       });
     }
   }
