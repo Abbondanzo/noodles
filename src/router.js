@@ -49,13 +49,24 @@ const viewEntryRouter = (route, options) => {
   if (match) {
     const matchingId = match[1];
     const context = getContext();
-    if (context.entries[matchingId]) {
-      const selectedEntry = context.entries[matchingId];
+    const selectedEntry = context.entries[matchingId];
+    if (selectedEntry) {
+      const brand = context.brands[selectedEntry.brandSlug];
+      const relatedVideos = Object.keys(context.entries)
+        .filter(
+          (entrySlug) =>
+            context.entries[entrySlug].brandSlug === selectedEntry.brandSlug &&
+            entrySlug !== selectedEntry.slug
+        )
+        .map((entrySlug) => context.entries[entrySlug]);
+      const numBrandVideos = relatedVideos.length + 1;
       const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "view.pug");
       return pug.renderFile(pugFile, {
         ...options,
-        ...getContext(),
+        ...context,
         entry: selectedEntry,
+        brand,
+        numBrandVideos,
       });
     }
   }

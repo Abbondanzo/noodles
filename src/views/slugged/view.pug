@@ -39,6 +39,12 @@ block body
               img.icon(src=`${baseURL}/assets/icons/flag.svg`)
               span Report
       .divider
-      .brand-info
-        - const brandUrl = `${baseURL}/brand/${entry.brandSlug}`
-        a.color-inherit(href=brandUrl)= brands[entry.brandSlug].name
+      .brand-row
+        .brand-avatar #{brand.name[0]}
+        .brand-info
+          .brand-name
+            - const brandUrl = `${baseURL}/brand/${brand.slug}`
+            a.color-inherit(href=brandUrl)= brand.name
+          span #{numBrandVideos} Videos | 3.2K Subscribers
+        .subscribe.pseudo-interactive Subscribe
+      .divider
