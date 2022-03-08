@@ -1,0 +1,57 @@
+.card
+  display: flex
+  flex-direction: column
+  width: 100%
+  color: #6b6b6b
+  font-size: 12px
+
+  &.card-horizontal
+    flex-direction: row
+
+    a
+      flex: 1
+
+    .card-info
+      flex: 1
+      margin-left: 8px
+
+  div
+    margin-bottom: 4px
+
+  .card-title
+    font-size: 14px
+
+  .card-image-wrapper
+    width: 100%
+    aspect-ratio: 1.8
+    overflow: hidden
+    position: relative
+    background-color: $video-loading-color
+
+    &:hover::after
+      @keyframes loadingIndicator
+        from
+          right: 100%
+        to
+          right: 0
+      animation-duration: 0.5s
+      animation-name: loadingIndicator
+
+    &::after
+      content: ""
+      position: absolute
+      background: $primary-color
+      left: 0
+      right: 100%
+      top: 0
+      height: 4px
+      transition: all 0s
+      transition-timing-function: linear
+      overflow: hidden
+
+    img
+      width: 100%
+      height: auto
+
+      &.inverted
+        transform: scaleX(-1)
