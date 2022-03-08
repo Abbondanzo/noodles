@@ -1,4 +1,5 @@
 extends ../partials/layout
+include ../mixins/card
 
 append config
   - var pageTitle = entry.title
@@ -44,4 +45,18 @@ block body
             a.color-inherit(href=brandUrl)= brand.name
           span #{numBrandVideos} Videos | #{truncateNumber(brand.subscribers)} Subscribers
         .subscribe.pseudo-interactive Subscribe
+      .divider
+      .categories-row
+        .title Categories
+        .categories
+          each categorySlug in entry.categorySlugs
+            - const categoryUrl = `${baseURL}/category/${categorySlug}`
+            a(href=categoryUrl)
+              .category= categories[categorySlug].name
+      .divider
+      .related-videos-row
+        .title Related Videos
+        ul.card-grid
+          each entry in relatedVideos
+            +card(entry)
       .divider
