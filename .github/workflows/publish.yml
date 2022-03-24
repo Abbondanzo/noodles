@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 env:
-  BASE_URL: /noodles # Match this to the base URL of your GitHub pages
+  BASE_URL: / # Match this to the base URL of your GitHub pages
 
 jobs:
   build:
