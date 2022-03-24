@@ -5,34 +5,45 @@ const { getContext } = require("./context");
 
 const VIEW_ROOT_DIR = path.join(__dirname, "views");
 
+const getPugFile = (route) => {
+  return path.join(VIEW_ROOT_DIR, `${route}.pug`);
+};
+
 /**
  * A Router checks the given route, and if it can handle that route it returns a string of rendered
  * HTML contents.
  *
  * @callback Router
  * @param {string} route
- * @param {Object} options
+ * @param {Object} context
  * @returns {string | null}
  */
+
+/**
+ * @type {Router}
+ */
+const categoriesRouter = (route, context) => {
+  if (route === "/categories") {
+    console.log("categories");
+  }
+  return null;
+};
 
 /**
  * Tries to match the given route to a pug file by its path on the filesystem.
  *
  * @type {Router}
  */
-const pugFileRouter = (route, options) => {
+const pugFileRouter = (route, context) => {
   let pugFile;
-  if (fs.existsSync(path.join(VIEW_ROOT_DIR, `${route}.pug`))) {
-    pugFile = path.join(VIEW_ROOT_DIR, `${route}.pug`);
-  } else if (fs.existsSync(path.join(VIEW_ROOT_DIR, route, "index.pug"))) {
-    pugFile = path.join(VIEW_ROOT_DIR, route, "index.pug");
+  if (fs.existsSync(getPugFile(route))) {
+    pugFile = getPugFile(route);
+  } else if (fs.existsSync(getPugFile(`${route}/index`))) {
+    pugFile = getPugFile(`${route}/index`);
   }
 
   if (pugFile) {
-    return pug.renderFile(pugFile, {
-      ...options,
-      ...getContext(),
-    });
+    return pug.renderFile(pugFile, context);
   }
 
   return null;
@@ -41,16 +52,14 @@ const pugFileRouter = (route, options) => {
 /**
  * @type {Router}
  */
-const brandRouter = (route, options) => {
+const brandRouter = (route, context) => {
   const match = route.match(/brand\/([A-z0-9-]+)\/?/);
   if (match) {
     const matchingId = match[1];
-    const context = getContext();
     const selectedBrand = context.brands[matchingId];
     if (selectedBrand) {
-      const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "brand.pug");
+      const pugFile = getPugFile("slugged/brand");
       return pug.renderFile(pugFile, {
-        ...options,
         ...context,
         brand: selectedBrand,
       });
@@ -63,16 +72,14 @@ const brandRouter = (route, options) => {
 /**
  * @type {Router}
  */
-const categoryRouter = (route, options) => {
+const categoryRouter = (route, context) => {
   const match = route.match(/category\/([A-z0-9-]+)\/?/);
   if (match) {
     const matchingId = match[1];
-    const context = getContext();
     const selectedCategory = context.categories[matchingId];
     if (selectedCategory) {
-      const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "category.pug");
+      const pugFile = getPugFile("slugged/category");
       return pug.renderFile(pugFile, {
-        ...options,
         ...context,
         category: selectedCategory,
       });
@@ -88,11 +95,10 @@ const categoryRouter = (route, options) => {
  *
  * @type {Router}
  */
-const viewEntryRouter = (route, options) => {
+const viewEntryRouter = (route, context) => {
   const match = route.match(/view\/([A-z0-9-]+)\/?/);
   if (match) {
     const matchingId = match[1];
-    const context = getContext();
     const selectedEntry = context.entries[matchingId];
     if (selectedEntry) {
       const brand = context.brands[selectedEntry.brandSlug];
@@ -111,9 +117,8 @@ const viewEntryRouter = (route, options) => {
       const sidebarVideos = recommendedSection.entries
         .slice(0, 5)
         .map((entrySlug) => context.entries[entrySlug]);
-      const pugFile = path.join(VIEW_ROOT_DIR, "slugged", "view.pug");
+      const pugFile = getPugFile("slugged/view");
       return pug.renderFile(pugFile, {
-        ...options,
         ...context,
         entry: selectedEntry,
         brand,
@@ -138,6 +143,7 @@ const routerPipe =
   (routers) =>
   (route, options = {}) => {
     const baseOptions = {
+      ...getContext(),
       baseURL: "",
     };
     for (const router of routers) {
@@ -150,6 +156,7 @@ const routerPipe =
   };
 
 const appRouter = routerPipe([
+  categoriesRouter,
   pugFileRouter,
   brandRouter,
   categoryRouter,
