@@ -39,7 +39,7 @@ block body
       .divider
       .brand-row
         .brand-avatar #{brand.name[0]}
-          +nood-image(brand)
+          +nood-image(brand.picture, brand.name)
         .brand-info
           .brand-name
             - const brandUrl = `${baseURL}/brand/${brand.slug}`

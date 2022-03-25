@@ -9,7 +9,7 @@ mixin brand(brand)
   li.card
     a(href=brandURL)
       div.card-image-wrapper
-        +nood-image(brand)
+        +nood-image(brand.picture, brand.name)
     .card-info
       div.card-title
         a(href=brandURL)= brand.name
