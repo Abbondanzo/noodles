@@ -1,5 +1,6 @@
 extends ../partials/layout
 include ../mixins/card
+include ../mixins/entry-image
 
 append config
   - var pageTitle = entry.title
@@ -38,6 +39,7 @@ block body
       .divider
       .brand-row
         .brand-avatar #{brand.name[0]}
+          +entry-image(brand)
         .brand-info
           .brand-name
             - const brandUrl = `${baseURL}/brand/${brand.slug}`
