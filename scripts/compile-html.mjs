@@ -51,7 +51,11 @@ const writeFiles = () => {
   }
 
   const routes = collectRoutes();
-  const baseURL = process.env.BASE_URL || "";
+  let baseURL = process.env.BASE_URL || "/";
+  // Trim ending slash, we append our own everywhere
+  if (baseURL.endsWith("/")) {
+    baseURL = baseURL.substring(0, baseURL.length - 1);
+  }
 
   routes.forEach((route) => {
     const doctype = route === "sitemap" ? "xml" : "html";

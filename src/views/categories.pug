@@ -1,9 +1,21 @@
 extends ./partials/layout
+include ./mixins/card
 
 append config
   - var pageTitle = "Categories"
 
 block body
-  div.content
+  div.content.content-categories
     h1.title Categories
-    p Work in progress...
+    ul.card-grid
+      each sample in sampleCategories
+        - const entry = entries[sample.entrySlug]
+        - const categoryURL = `${baseURL}/category/${sample.categorySlug}`
+        li.card
+          a(href=categoryURL)
+            div.card-image-wrapper
+              +entry-image(entry)
+            .category-overlay
+            .category-info
+              h2= categories[sample.categorySlug].name
+              p= sample.numVideos + " videos"

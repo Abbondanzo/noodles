@@ -1,9 +1,12 @@
 extends ../partials/layout
+include ../mixins/card
 
 append config
   - var pageTitle = category.name
 
 block body
   div.content.content-category
-    p Placeholder for category #{category.name}
-    p Work in progress...
+    h1.title= category.name
+    ul.card-grid
+      each entry in filteredEntries
+        +card(entry)

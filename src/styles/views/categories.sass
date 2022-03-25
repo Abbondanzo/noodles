@@ -1,0 +1,33 @@
+@import "../variables"
+    
+.content-categories
+  .card-grid
+    display: grid
+    justify-content: center
+    align-content: center
+    grid-template-rows: auto
+    grid-template-columns: repeat(4, 1fr)
+    grid-row-gap: 32px
+    grid-column-gap: 16px
+    padding: 20px 0
+
+    .card
+      position: relative
+
+      .category-overlay
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
+        background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,.5) 100%)
+
+      .category-info
+        position: absolute
+        left: 8px
+        bottom: 8px
+        color: white
+
+        p
+          color: #c8c8c8
+          margin: 0

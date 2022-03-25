@@ -1,0 +1,4 @@
+mixin entry-image(entry, horizontal)
+  - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
+  - const minImgPath = `${baseURL}/assets/img/noods/min/${entry.picture.fileName}`
+  img(src=minImgPath, alt=entry.title, class={ "inverted": entry.picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
