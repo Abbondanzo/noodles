@@ -28,30 +28,25 @@
     position: relative
     background-color: $video-loading-color
 
-    &:hover::after
-      @keyframes loadingIndicator
-        from
-          right: 100%
-        to
-          right: 0
-      animation-duration: 0.5s
-      animation-name: loadingIndicator
+    &.loadable
+      &:hover::after
+        @keyframes loadingIndicator
+          from
+            right: 100%
+          to
+            right: 0
+        animation-duration: 0.5s
+        animation-name: loadingIndicator
 
-    &::after
-      content: ""
-      position: absolute
-      background: $primary-color
-      left: 0
-      right: 100%
-      top: 0
-      height: 4px
-      transition: all 0s
-      transition-timing-function: linear
-      overflow: hidden
+      &::after
+        content: ""
+        position: absolute
+        background: $primary-color
+        left: 0
+        right: 100%
+        top: 0
+        height: 4px
+        transition: all 0s
+        transition-timing-function: linear
+        overflow: hidden
 
-    img
-      width: 100%
-      height: auto
-
-      &.inverted
-        transform: scaleX(-1)

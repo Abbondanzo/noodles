@@ -3,14 +3,22 @@
 @import variables
 
 @import mixins/card
+@import mixins/entry-image
 
+@import views/categories
+@import views/category
 @import views/index
 @import views/view
+
+html,
+body
+  min-height: 100%
 
 body
   font: 100%
   background: $background
-  display: grid
+  display: flex
+  flex-direction: column
   color: #fff
 
 h1
