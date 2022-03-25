@@ -23,40 +23,78 @@ const getPugFile = (route) => {
  * @type {Router}
  */
 const categoriesRouter = (route, context) => {
-  if (route === "/categories") {
-    const entryList = Object.keys(context.entries).map(
-      (entrySlug) => context.entries[entrySlug]
-    );
-    const sampleCategories = [];
-    Object.keys(context.categories).forEach((categorySlug) => {
-      const sampleEntry =
-        entryList.find((entry) => {
-          // Find an entry that is not already in the sample list
-          return (
-            entry.categorySlugs.includes(categorySlug) &&
-            !sampleCategories.find((sample) => sample.entrySlug === entry.slug)
-          );
-        }) ||
-        // If unable to find one, fall back to duplicate entry
-        entryList.find((entry) => {
-          return entry.categorySlug.includes(categorySlug);
-        });
-      let numVideos = 0;
-      entryList.forEach((entry) => {
-        if (entry.categorySlugs.includes(categorySlug)) {
-          numVideos++;
-        }
-      });
-      sampleCategories.push({
-        entrySlug: sampleEntry.slug,
-        categorySlug,
-        numVideos,
-      });
-    });
-    const pugFile = getPugFile("categories");
-    return pug.renderFile(pugFile, { ...context, sampleCategories });
+  if (route !== "/categories") {
+    return null;
   }
-  return null;
+
+  const entryList = Object.keys(context.entries).map(
+    (entrySlug) => context.entries[entrySlug]
+  );
+  const sampleCategories = [];
+  Object.keys(context.categories).forEach((categorySlug) => {
+    const sampleEntry =
+      entryList.find((entry) => {
+        // Find an entry that is not already in the sample list
+        return (
+          entry.categorySlugs.includes(categorySlug) &&
+          !sampleCategories.find((sample) => sample.entrySlug === entry.slug)
+        );
+      }) ||
+      // If unable to find one, fall back to duplicate entry
+      entryList.find((entry) => {
+        return entry.categorySlug.includes(categorySlug);
+      });
+    let numVideos = 0;
+    entryList.forEach((entry) => {
+      if (entry.categorySlugs.includes(categorySlug)) {
+        numVideos++;
+      }
+    });
+    sampleCategories.push({
+      entrySlug: sampleEntry.slug,
+      categorySlug,
+      numVideos,
+    });
+  });
+  const pugFile = getPugFile("categories");
+  return pug.renderFile(pugFile, { ...context, sampleCategories });
+};
+
+/**
+ * @type {Router}
+ */
+const noodstarsRouter = (route, context) => {
+  if (route !== "/noodstars") {
+    return null;
+  }
+  const remainingBrands = Object.keys(context.brands).filter(
+    (brandSlug) => !context.topBrands.includes(brandSlug)
+  );
+  const numVideosForBrand = (brandSlug) => {
+    let numVideos = 0;
+    Object.keys(context.entries).forEach((entrySlug) => {
+      if (context.entries[entrySlug].brandSlug === brandSlug) {
+        numVideos++;
+      }
+    });
+    return numVideos;
+  };
+  const numViewsForBrand = (brandSlug) => {
+    let numViews = 0;
+    Object.keys(context.entries).forEach((entrySlug) => {
+      if (context.entries[entrySlug].brandSlug === brandSlug) {
+        numViews += context.entries[entrySlug].stats.views;
+      }
+    });
+    return numViews;
+  };
+  const pugFile = getPugFile("noodstars");
+  return pug.renderFile(pugFile, {
+    ...context,
+    remainingBrands,
+    numVideosForBrand,
+    numViewsForBrand,
+  });
 };
 
 /**
@@ -191,6 +229,7 @@ const routerPipe =
 
 const appRouter = routerPipe([
   categoriesRouter,
+  noodstarsRouter,
   pugFileRouter,
   brandRouter,
   categoryRouter,

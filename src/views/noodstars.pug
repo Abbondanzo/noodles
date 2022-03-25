@@ -1,9 +1,31 @@
 extends ./partials/layout
+include ./mixins/card
 
 append config
   - var pageTitle = "Noodstars"
 
+mixin brand(brand)
+  - const brandURL = `${baseURL}/brand/${brand.slug}`
+  li.card
+    a(href=brandURL)
+      div.card-image-wrapper
+        +entry-image(brand)
+    .card-info
+      div.card-title
+        a(href=brandURL)= brand.name
+      .metadata
+        span #{numVideosForBrand(brand.slug)} videos
+        span #{truncateNumber(numViewsForBrand(brand.slug))} views
+
 block body
-  div.content
-    h1.title Noodstars
-    p Work in progress...
+  div.content.content-noodstars
+    h1.title Top Trending Noodstars
+    ul.card-grid-top
+      each brandId in topBrands
+        - const brand = brands[brandId]
+        +brand(brand)
+    h1.title This Month's Most Popular Noodstars
+    ul.card-grid-remaining
+      each brandId in remainingBrands
+        - const brand = brands[brandId]
+        +brand(brand)
