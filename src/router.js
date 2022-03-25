@@ -108,10 +108,14 @@ const categoryRouter = (route, context) => {
     const matchingId = match[1];
     const selectedCategory = context.categories[matchingId];
     if (selectedCategory) {
+      const filteredEntries = Object.keys(context.entries)
+        .map((entrySlug) => context.entries[entrySlug])
+        .filter((entry) => entry.categorySlugs.includes(matchingId));
       const pugFile = getPugFile("slugged/category");
       return pug.renderFile(pugFile, {
         ...context,
         category: selectedCategory,
+        filteredEntries,
       });
     }
   }
