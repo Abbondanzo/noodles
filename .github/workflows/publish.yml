@@ -33,6 +33,7 @@ jobs:
         run: |
           touch CNAME
           echo 'nood.pictures' > CNAME
+          git add CNAME
       - name: Commit files
         run: |
           git config --local user.name "GitHub Actions Bot"
