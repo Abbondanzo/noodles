@@ -12,6 +12,7 @@ mixin card(entry, horizontal)
       div
         - const brandUrl = `${baseURL}/brand/${entry.brandSlug}`
         a.color-inherit(href=brandUrl)= brands[entry.brandSlug].name
-      div
+      .metadata
         span #{truncateNumber(entry.stats.views)} views
-        span(style="margin-left:8px")= Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes))) + "%" 
+        img.icon(src=`${baseURL}/assets/icons/thumbs-up.svg`)
+        span= Math.round(100 * (entry.stats.likes / (entry.stats.likes + entry.stats.dislikes))) + "%" 

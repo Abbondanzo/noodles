@@ -5,6 +5,19 @@
   color: #6b6b6b
   font-size: 12px
 
+  .card-info
+    .metadata
+      display: flex
+      align-items: center
+
+      & *:not(:first-child)
+        margin-left: 8px
+
+      .icon
+        width: 12px
+        height: 12px
+        opacity: 0.5
+
   &.card-horizontal
     flex-direction: row
 
