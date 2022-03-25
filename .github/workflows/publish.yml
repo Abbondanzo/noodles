@@ -29,6 +29,10 @@ jobs:
         run: npm run build
       - name: Move files to docs/ directory
         run: mv ./dist ./docs
+      - name: Set custom domain
+        run: |
+          touch CNAME
+          echo 'nood.pictures' > CNAME
       - name: Commit files
         run: |
           git config --local user.name "GitHub Actions Bot"
