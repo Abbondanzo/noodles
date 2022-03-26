@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { getDirname, readPlaintextFile } from "./utils.mjs";
+import { readPlaintextFile } from "./utils";
 
-const dataDir = path.join(getDirname(import.meta.url), "..", "..", "data");
+const dataDir = path.join(__dirname, "..", "..", "data");
 
 export const brands = readPlaintextFile(path.join(dataDir, "brands.txt"));
 

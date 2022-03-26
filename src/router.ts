@@ -10,6 +10,8 @@ const getPugFile = (route: string) => {
   return path.join(VIEW_ROOT_DIR, `${route}.pug`);
 };
 
+type Context = Data & pug.Options & { baseURL: string };
+
 /**
  * A Router checks the given route, and if it can handle that route it returns a string of rendered
  * HTML contents.
@@ -214,14 +216,11 @@ const viewEntryRouter: Router = (route, context) => {
 /**
  * Allows you to chain over a list of routers. Will return early on the first router that returns
  * a truthy string value.
- *
- * @param {Array<Router>} routers
- * @returns {Router}
  */
 const routerPipe =
-  (routers: Router[]): Router =>
-  (route, options) => {
-    const baseOptions = {
+  (routers: Router[]) =>
+  (route: string, options: pug.Options & { baseURL?: string } = {}) => {
+    const baseOptions: Context = {
       ...getContext(),
       baseURL: "",
     };
@@ -234,7 +233,7 @@ const routerPipe =
     return null;
   };
 
-const appRouter = routerPipe([
+export const appRouter = routerPipe([
   categoriesRouter,
   noodstarsRouter,
   pugFileRouter,
@@ -242,7 +241,3 @@ const appRouter = routerPipe([
   categoryRouter,
   viewEntryRouter,
 ]);
-
-module.exports = {
-  appRouter,
-};

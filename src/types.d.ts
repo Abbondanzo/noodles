@@ -35,7 +35,7 @@ interface Section {
   entries: string[];
 }
 
-interface Context {
+interface Data {
   brands: { [key: string]: Brand };
   categories: { [key: string]: Category };
   entries: { [key: string]: Entry };

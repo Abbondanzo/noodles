@@ -1,12 +1,23 @@
 {
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": false,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitAny": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "dist",
     "skipLibCheck": true,
-    "typeRoots": ["./src/types.d.ts", "./node_modules/@types"]
+    "sourceMap": true,
+    "target": "esnext",
+    "typeRoots": ["./src/types.d.ts", "./node_modules/@types/"]
   }
 }

@@ -1,10 +1,6 @@
-import { photos, titles } from "../shared/rawData.mjs";
-import {
-  createArrayGenerator,
-  escapeURL,
-  getRandom,
-} from "../shared/utils.mjs";
-import { generateStats } from "./generateStats.mjs";
+import { photos, titles } from "../shared/rawData";
+import { createArrayGenerator, escapeURL, getRandom } from "../shared/utils";
+import { generateStats } from "./generateStats";
 
 const CHANCE_TO_INVERT_PICTURE = 0.3;
 const MIN_CATEGORY_COUNT = 2;
@@ -28,11 +24,7 @@ const MAX_CATEGORY_COUNT = 5;
 
 const photoGenerator = createArrayGenerator(photos);
 
-/**
- * @param {string} title
- * @returns {string}
- */
-const titleToSlug = (title) => {
+const titleToSlug = (title: string) => {
   const spaceCheckIndex = 32;
   const firstSpaceIndex = title.indexOf(" ", spaceCheckIndex);
   if (firstSpaceIndex === -1) {
@@ -42,18 +34,13 @@ const titleToSlug = (title) => {
   }
 };
 
-/**
- * @param {Array<string>} brandSlugs
- * @param {Array<string>} categorySlugs
- * @returns {Object.<string, Entry>}
- */
-export const generateEntries = (brandSlugs, categorySlugs) => {
+export const generateEntries = (
+  brandSlugs: string[],
+  categorySlugs: string[]
+) => {
   const brandsGenerator = createArrayGenerator(brandSlugs);
 
-  /**
-   * @type {Object.<string, Entry>}
-   */
-  const output = {};
+  const output: { [key: string]: Entry } = {};
 
   titles.forEach((title) => {
     // Always include categories that are mentioned in the title
@@ -77,11 +64,9 @@ export const generateEntries = (brandSlugs, categorySlugs) => {
       titleCategories.push(remainingCategories[remainingCategoryIndex]);
     }
 
-    const invert = getRandom() <= CHANCE_TO_INVERT_PICTURE;
-    /** @type {Picture} */
-    const picture = {
-      invert,
-      fileName: photoGenerator.next().value,
+    const picture: Picture = {
+      invert: getRandom() <= CHANCE_TO_INVERT_PICTURE,
+      fileName: String(photoGenerator.next().value),
     };
 
     const slug = titleToSlug(title);
@@ -89,7 +74,7 @@ export const generateEntries = (brandSlugs, categorySlugs) => {
     output[slug] = {
       title,
       slug,
-      brandSlug: brandsGenerator.next().value,
+      brandSlug: String(brandsGenerator.next().value),
       categorySlugs: titleCategories,
       stats: generateStats(),
       picture,

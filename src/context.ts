@@ -16,7 +16,7 @@ const truncateNumber = (num: number): string => {
   }
 };
 
-export const getContext = (): Context => {
+export const getContext = (): Data => {
   if (!fs.existsSync(DATA_FILE_PATH)) {
     throw new Error("Data file has not been generated");
   }

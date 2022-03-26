@@ -1,8 +1,7 @@
 import path from "path";
-import { getDirname } from "./utils.mjs";
 
 export const dataOutputFile = path.join(
-  getDirname(import.meta.url),
+  __dirname,
   "..",
   "..",
   "literally-nosql.json"

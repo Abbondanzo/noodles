@@ -1,4 +1,4 @@
-export const getTopBrands = (context: Context): Brand[] => {
+export const getTopBrands = (context: Data): Brand[] => {
   const numTopBrands = 4;
   return Object.keys(context.brands)
     .map((brandSlug) => context.brands[brandSlug])
