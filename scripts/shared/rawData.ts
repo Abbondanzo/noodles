@@ -6,6 +6,10 @@ const dataDir = path.join(__dirname, "..", "..", "data");
 
 export const brands = readPlaintextFile(path.join(dataDir, "brands.txt"));
 
+export const brandDescriptions = readPlaintextFile(
+  path.join(dataDir, "brand-descriptions.txt")
+);
+
 export const categories = readPlaintextFile(
   path.join(dataDir, "categories.txt")
 );

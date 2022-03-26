@@ -23,3 +23,14 @@ block body
           .stat
             h1= truncateNumber(brand.subscribers)
             span Subscribers
+    .info
+      .description
+        h3 Description
+        p= brand.description
+      .links
+        ul
+          each site in brand.sites
+            li
+              a(href=site.url)
+                img.icon(src=`${baseURL}/assets/icons/link.svg`)
+                | #{site.name}

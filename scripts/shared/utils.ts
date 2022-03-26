@@ -13,7 +13,9 @@ export const getRandomInRange = (min: number, max: number, round = true) => {
   return round ? Math.round(randomNum) : randomNum;
 };
 
-export function* createArrayGenerator(array: string[]) {
+export function* createArrayGenerator(
+  array: string[]
+): Generator<string, string, unknown> {
   let currentArray = [...array];
   while (true) {
     if (currentArray.length === 0) {

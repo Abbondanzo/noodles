@@ -6,8 +6,10 @@ interface Picture {
 interface Brand {
   slug: string;
   name: string;
+  description: string;
   subscribers: number;
   picture: Picture;
+  sites: { name: string; url: string }[];
 }
 
 interface Category {

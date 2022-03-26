@@ -66,7 +66,7 @@ export const generateEntries = (
 
     const picture: Picture = {
       invert: getRandom() <= CHANCE_TO_INVERT_PICTURE,
-      fileName: String(photoGenerator.next().value),
+      fileName: photoGenerator.next().value,
     };
 
     const slug = titleToSlug(title);
@@ -74,7 +74,7 @@ export const generateEntries = (
     output[slug] = {
       title,
       slug,
-      brandSlug: String(brandsGenerator.next().value),
+      brandSlug: brandsGenerator.next().value,
       categorySlugs: titleCategories,
       stats: generateStats(),
       picture,
