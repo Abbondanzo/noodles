@@ -1,15 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const sharp = require("sharp");
+import fs from "fs";
+import path from "path";
+import sharp from "sharp";
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 
-/**
- * @param {string} source
- * @param {string} target
- * @returns {number}
- */
-const copyRecursive = (source, target) => {
+const copyRecursive = (source: string, target: string): number => {
   if (fs.existsSync(source)) {
     const stats = fs.statSync(source);
     if (stats.isDirectory()) {

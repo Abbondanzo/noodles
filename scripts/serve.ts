@@ -1,7 +1,7 @@
-const http = require("http");
-const { Server } = require("node-static");
-const path = require("path");
-const { appRouter } = require("../src/router");
+import http from "http";
+import { Server } from "node-static";
+import path from "path";
+import { appRouter } from "../src/router";
 
 const PORT = 3000;
 
@@ -12,12 +12,12 @@ const PORT = 3000;
  * @returns {boolean} if request is handled
  */
 
+type ChainableHandler = (req: any, res: any) => boolean;
+
 /**
  * Servers Pug files.
- *
- * @returns {ChainableHandler}
  */
-const createPugServer = () => {
+const createPugServer = (): ChainableHandler => {
   return (req, res) => {
     try {
       const maybePugRendered = appRouter(req.url);
@@ -38,10 +38,8 @@ const createPugServer = () => {
 
 /**
  * Serves files from the data/photos directory at root.
- *
- * @returns {ChainableHandler}
  */
-const createNoodsServer = () => {
+const createNoodsServer = (): ChainableHandler => {
   const noodPhotoServer = new Server(
     path.join(__dirname, "..", "data", "photos")
   );
@@ -62,10 +60,8 @@ const createNoodsServer = () => {
 
 /**
  * Serves all assets from the src/assets folder at root.
- *
- * @returns {ChainableHandler}
  */
-const createAssetsServer = () => {
+const createAssetsServer = (): ChainableHandler => {
   const assetServer = new Server(path.join(__dirname, "..", "src"));
   return (req, res) => {
     if (req.url.startsWith("/assets")) {
@@ -82,10 +78,8 @@ const createAssetsServer = () => {
 
 /**
  * Serves any assets from dist folder at root.
- *
- * @returns {ChainableHandler}
  */
-const createDistServer = () => {
+const createDistServer = (): ChainableHandler => {
   const distServer = new Server(path.join(__dirname, "..", "dist"));
   return (req, res) => {
     req
@@ -100,18 +94,17 @@ const createDistServer = () => {
 /**
  * Allows you to chain a list of given servers. Will return early on the first server that returns
  * a true value.
- *
- * @param {Array<ChainableHandler>} servers
- * @returns {ChainableHandler}
  */
-const serverPipe = (servers) => (req, res) => {
-  for (const server of servers) {
-    if (server(req, res)) {
-      return true;
+const serverPipe =
+  (servers: ChainableHandler[]): ChainableHandler =>
+  (req, res) => {
+    for (const server of servers) {
+      if (server(req, res)) {
+        return true;
+      }
     }
-  }
-  return false;
-};
+    return false;
+  };
 
 try {
   const pugServer = createPugServer();
@@ -133,6 +126,6 @@ try {
     })
     .listen(PORT);
   console.log(`Listening on port ${PORT}`);
-} catch (e) {
+} catch (e: any) {
   throw new Error(e);
 }

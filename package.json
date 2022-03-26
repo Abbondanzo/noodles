@@ -4,23 +4,29 @@
   "description": "Spicy noodle pictures",
   "main": "compile.js",
   "scripts": {
-    "serve": "node ./scripts/serve",
+    "serve": "ts-node-dev --files ./scripts/serve",
     "build": "npm run clean && npm run build:assets && npm run build:data && npm run build:sass && npm run build:html",
-    "clean": "node ./scripts/clean",
-    "build:assets": "node ./scripts/copy-assets",
-    "build:data": "node ./scripts/generate-data.mjs",
-    "build:html": "node ./scripts/compile-html.mjs",
+    "clean": "ts-node ./scripts/clean",
+    "build:assets": "ts-node ./scripts/copy-assets",
+    "build:data": "ts-node  --files ./scripts/generate-data",
+    "build:html": "ts-node --files ./scripts/compile-html",
     "build:sass": "node-sass src/styles/main.sass -o dist/styles --output-style compressed"
   },
   "author": "Peter Abbondanzo",
   "license": "MIT",
   "dependencies": {
-    "node-sass": "^7.0.1",
+    "node-sass": "7.0.1",
     "pug": "3.0.2",
     "sharp": "0.30.2"
   },
   "devDependencies": {
-    "node-static": "0.7.11"
+    "@types/node-static": "0.7.7",
+    "@types/pug": "2.0.6",
+    "@types/sharp": "0.30.0",
+    "node-static": "0.7.11",
+    "ts-node": "10.7.0",
+    "ts-node-dev": "1.1.8",
+    "typescript": "4.6.3"
   },
   "engines": {
     "node": ">=14.0.0"
