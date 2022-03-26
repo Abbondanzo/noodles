@@ -4,7 +4,7 @@
   "description": "Spicy noodle pictures",
   "main": "compile.js",
   "scripts": {
-    "serve": "node ./scripts/serve",
+    "serve": "ts-node --files ./scripts/serve",
     "build": "npm run clean && npm run build:assets && npm run build:data && npm run build:sass && npm run build:html",
     "clean": "node ./scripts/clean",
     "build:assets": "node ./scripts/copy-assets",
@@ -15,12 +15,15 @@
   "author": "Peter Abbondanzo",
   "license": "MIT",
   "dependencies": {
-    "node-sass": "^7.0.1",
+    "node-sass": "7.0.1",
     "pug": "3.0.2",
     "sharp": "0.30.2"
   },
   "devDependencies": {
-    "node-static": "0.7.11"
+    "@types/pug": "2.0.6",
+    "node-static": "0.7.11",
+    "ts-node": "10.7.0",
+    "typescript": "4.6.3"
   },
   "engines": {
     "node": ">=14.0.0"

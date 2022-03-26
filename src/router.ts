@@ -1,29 +1,22 @@
-const fs = require("fs");
-const path = require("path");
-const pug = require("pug");
-const { getContext } = require("./context");
-const { getTopBrands } = require("./utils");
+import fs from "fs";
+import path from "path";
+import pug from "pug";
+import { getContext } from "./context";
+import { getTopBrands } from "./utils";
 
 const VIEW_ROOT_DIR = path.join(__dirname, "views");
 
-const getPugFile = (route) => {
+const getPugFile = (route: string) => {
   return path.join(VIEW_ROOT_DIR, `${route}.pug`);
 };
 
 /**
  * A Router checks the given route, and if it can handle that route it returns a string of rendered
  * HTML contents.
- *
- * @callback Router
- * @param {string} route
- * @param {Object} context
- * @returns {string | null}
  */
+type Router = (route: string, context: Context) => string | null;
 
-/**
- * @type {Router}
- */
-const categoriesRouter = (route, context) => {
+const categoriesRouter: Router = (route, context) => {
   if (route !== "/categories") {
     return null;
   }
@@ -31,7 +24,11 @@ const categoriesRouter = (route, context) => {
   const entryList = Object.keys(context.entries).map(
     (entrySlug) => context.entries[entrySlug]
   );
-  const sampleCategories = [];
+  const sampleCategories: {
+    entrySlug: string;
+    categorySlug: string;
+    numVideos: number;
+  }[] = [];
   Object.keys(context.categories).forEach((categorySlug) => {
     const sampleEntry =
       entryList.find((entry) => {
@@ -43,7 +40,7 @@ const categoriesRouter = (route, context) => {
       }) ||
       // If unable to find one, fall back to duplicate entry
       entryList.find((entry) => {
-        return entry.categorySlug.includes(categorySlug);
+        return entry.categorySlugs.includes(categorySlug);
       });
     let numVideos = 0;
     entryList.forEach((entry) => {
@@ -52,7 +49,7 @@ const categoriesRouter = (route, context) => {
       }
     });
     sampleCategories.push({
-      entrySlug: sampleEntry.slug,
+      entrySlug: sampleEntry!.slug,
       categorySlug,
       numVideos,
     });
@@ -61,10 +58,7 @@ const categoriesRouter = (route, context) => {
   return pug.renderFile(pugFile, { ...context, sampleCategories });
 };
 
-/**
- * @type {Router}
- */
-const noodstarsRouter = (route, context) => {
+const noodstarsRouter: Router = (route, context) => {
   if (route !== "/noodstars") {
     return null;
   }
@@ -72,7 +66,7 @@ const noodstarsRouter = (route, context) => {
   const remainingBrands = Object.keys(context.brands).filter(
     (brandSlug) => !topBrands.includes(context.brands[brandSlug])
   );
-  const numVideosForBrand = (brandSlug) => {
+  const numVideosForBrand = (brandSlug: string) => {
     let numVideos = 0;
     Object.keys(context.entries).forEach((entrySlug) => {
       if (context.entries[entrySlug].brandSlug === brandSlug) {
@@ -81,7 +75,7 @@ const noodstarsRouter = (route, context) => {
     });
     return numVideos;
   };
-  const numViewsForBrand = (brandSlug) => {
+  const numViewsForBrand = (brandSlug: string) => {
     let numViews = 0;
     Object.keys(context.entries).forEach((entrySlug) => {
       if (context.entries[entrySlug].brandSlug === brandSlug) {
@@ -102,11 +96,9 @@ const noodstarsRouter = (route, context) => {
 
 /**
  * Tries to match the given route to a pug file by its path on the filesystem.
- *
- * @type {Router}
  */
-const pugFileRouter = (route, context) => {
-  let pugFile;
+const pugFileRouter: Router = (route, context) => {
+  let pugFile: string | undefined;
   if (fs.existsSync(getPugFile(route))) {
     pugFile = getPugFile(route);
   } else if (fs.existsSync(getPugFile(`${route}/index`))) {
@@ -120,10 +112,7 @@ const pugFileRouter = (route, context) => {
   return null;
 };
 
-/**
- * @type {Router}
- */
-const brandRouter = (route, context) => {
+const brandRouter: Router = (route, context) => {
   const match = route.match(/brand\/([A-z0-9-]+)\/?/);
   if (match) {
     const brandSlug = match[1];
@@ -160,10 +149,7 @@ const brandRouter = (route, context) => {
   return null;
 };
 
-/**
- * @type {Router}
- */
-const categoryRouter = (route, context) => {
+const categoryRouter: Router = (route, context) => {
   const match = route.match(/category\/([A-z0-9-]+)\/?/);
   if (match) {
     const matchingId = match[1];
@@ -187,10 +173,8 @@ const categoryRouter = (route, context) => {
 /**
  * Tries to match any view entry by the given path. For example:
  * - `/view/my-uuid` will render an entry if one exists by the ID `my-uuid`.
- *
- * @type {Router}
  */
-const viewEntryRouter = (route, context) => {
+const viewEntryRouter: Router = (route, context) => {
   const match = route.match(/view\/([A-z0-9-]+)\/?/);
   if (match) {
     const matchingId = match[1];
@@ -235,8 +219,8 @@ const viewEntryRouter = (route, context) => {
  * @returns {Router}
  */
 const routerPipe =
-  (routers) =>
-  (route, options = {}) => {
+  (routers: Router[]): Router =>
+  (route, options) => {
     const baseOptions = {
       ...getContext(),
       baseURL: "",
