@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Barilla",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "https://www.barillagroup.com/en/"
+      },
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/Barilla_(company)"
+      }
+    ]
+  },
+  {
+    "name": "San Giorgio",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "https://www.ebrofoods.es/en/"
+      },
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/Ebro_Foods"
+      }
+    ]
+  },
+  {
+    "name": "Buitoni",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "https://www.buitoni.it/en"
+      },
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/Buitoni"
+      }
+    ]
+  },
+  {
+    "name": "Ronzoni",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "https://www.ebrofoods.es/en/"
+      },
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/Ebro_Foods"
+      }
+    ]
+  },
+  {
+    "name": "Rao's",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "http://raosrestaurants.com/"
+      },
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/Rao%27s"
+      }
+    ]
+  },
+  {
+    "name": "De Cecco",
+    "sites": [
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/De_Cecco"
+      }
+    ]
+  },
+  {
+    "name": "Trader Joe's",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "https://www.traderjoes.com/home"
+      },
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/Trader_Joe%27s"
+      }
+    ]
+  },
+  {
+    "name": "365 Everyday Value",
+    "sites": [
+      {
+        "name": "Wikipedia",
+        "url:": "https://en.wikipedia.org/wiki/List_of_Amazon_brands#365"
+      }
+    ]
+  },
+  {
+    "name": "Mueller's",
+    "sites": [
+      {
+        "name": "Home page",
+        "url:": "https://www.muellerspasta.com/"
+      }
+    ]
+  }
+]

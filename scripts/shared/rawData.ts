@@ -4,7 +4,9 @@ import { readPlaintextFile } from "./utils";
 
 const dataDir = path.join(__dirname, "..", "..", "data");
 
-export const brands = readPlaintextFile(path.join(dataDir, "brands.txt"));
+export const brands = JSON.parse(
+  fs.readFileSync(path.join(dataDir, "brands.json")).toString("utf8")
+);
 
 export const brandDescriptions = readPlaintextFile(
   path.join(dataDir, "brand-descriptions.txt")
