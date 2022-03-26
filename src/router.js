@@ -123,13 +123,31 @@ const pugFileRouter = (route, context) => {
 const brandRouter = (route, context) => {
   const match = route.match(/brand\/([A-z0-9-]+)\/?/);
   if (match) {
-    const matchingId = match[1];
-    const selectedBrand = context.brands[matchingId];
+    const brandSlug = match[1];
+    const selectedBrand = context.brands[brandSlug];
     if (selectedBrand) {
+      const rank = context.topBrands.includes(brandSlug)
+        ? context.topBrands.indexOf(brandSlug) + 1
+        : context.topBrands.length +
+          Object.keys(context.brands)
+            .filter((slug) => !context.topBrands.includes(slug))
+            .indexOf(brandSlug) +
+          1;
+      const videoViews = (() => {
+        let numViews = 0;
+        Object.keys(context.entries).forEach((entrySlug) => {
+          if (context.entries[entrySlug].brandSlug === brandSlug) {
+            numViews += context.entries[entrySlug].stats.views;
+          }
+        });
+        return numViews;
+      })();
       const pugFile = getPugFile("slugged/brand");
       return pug.renderFile(pugFile, {
         ...context,
         brand: selectedBrand,
+        rank,
+        videoViews,
       });
     }
   }
