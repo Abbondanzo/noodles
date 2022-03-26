@@ -9,8 +9,7 @@ block body
   div.content.content-view
     .video-column
       .mock-video
-        - const imgPath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
-        img(src=imgPath, alt=entry.title, class={ "inverted": entry.picture.invert })
+        +nood-image(entry.picture, entry.title, true)
         .play-button.pseudo-interactive
           .play-icon
       .video-info

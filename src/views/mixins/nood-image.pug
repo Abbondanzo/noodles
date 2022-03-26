@@ -1,4 +1,4 @@
-mixin nood-image(picture, alt)
+mixin nood-image(picture, alt, fullsize=false)
   - const imgPath = `${baseURL}/assets/img/noods/${picture.fileName}`
   - const minImgPath = `${baseURL}/assets/img/noods/min/${picture.fileName}`
-  img.nood-image(src=minImgPath, alt=picture.title, class={ "inverted": picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
+  img.nood-image(src=fullsize ? imgPath : minImgPath, alt=picture.title, class={ "inverted": picture.invert }, srcset=`${minImgPath}, ${imgPath}`)
