@@ -4,7 +4,7 @@
   "description": "Spicy noodle pictures",
   "main": "compile.js",
   "scripts": {
-    "serve": "ts-node --files ./scripts/serve",
+    "serve": "ts-node-dev --files ./scripts/serve",
     "build": "npm run clean && npm run build:assets && npm run build:data && npm run build:sass && npm run build:html",
     "clean": "ts-node ./scripts/clean",
     "build:assets": "ts-node ./scripts/copy-assets",
@@ -25,6 +25,7 @@
     "@types/sharp": "0.30.0",
     "node-static": "0.7.11",
     "ts-node": "10.7.0",
+    "ts-node-dev": "1.1.8",
     "typescript": "4.6.3"
   },
   "engines": {
