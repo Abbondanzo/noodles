@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const pug = require("pug");
 const { getContext } = require("./context");
+const { getTopBrands } = require("./utils");
 
 const VIEW_ROOT_DIR = path.join(__dirname, "views");
 
@@ -67,8 +68,9 @@ const noodstarsRouter = (route, context) => {
   if (route !== "/noodstars") {
     return null;
   }
+  const topBrands = getTopBrands(context);
   const remainingBrands = Object.keys(context.brands).filter(
-    (brandSlug) => !context.topBrands.includes(brandSlug)
+    (brandSlug) => !topBrands.includes(context.brands[brandSlug])
   );
   const numVideosForBrand = (brandSlug) => {
     let numVideos = 0;
@@ -91,6 +93,7 @@ const noodstarsRouter = (route, context) => {
   const pugFile = getPugFile("noodstars");
   return pug.renderFile(pugFile, {
     ...context,
+    topBrands,
     remainingBrands,
     numVideosForBrand,
     numViewsForBrand,
@@ -126,11 +129,13 @@ const brandRouter = (route, context) => {
     const brandSlug = match[1];
     const selectedBrand = context.brands[brandSlug];
     if (selectedBrand) {
-      const rank = context.topBrands.includes(brandSlug)
-        ? context.topBrands.indexOf(brandSlug) + 1
-        : context.topBrands.length +
+      const topBrands = getTopBrands(context);
+      const topBrandSlugs = topBrands.map((brand) => brand.slug);
+      const rank = topBrandSlugs.includes(brandSlug)
+        ? topBrandSlugs.indexOf(brandSlug) + 1
+        : topBrandSlugs.length +
           Object.keys(context.brands)
-            .filter((slug) => !context.topBrands.includes(slug))
+            .filter((slug) => !topBrandSlugs.includes(slug))
             .indexOf(brandSlug) +
           1;
       const videoViews = (() => {

@@ -21,8 +21,7 @@ block body
   div.content.content-noodstars
     h1.title Top Trending Noodstars
     ul.card-grid-top
-      each brandId in topBrands
-        - const brand = brands[brandId]
+      each brand in topBrands
         +brand(brand)
     h1.title This Month's Most Popular Noodstars
     ul.card-grid-remaining
