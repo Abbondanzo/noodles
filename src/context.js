@@ -9,7 +9,9 @@ const DATA_FILE_PATH = path.join(ROOT_DIR, "literally-nosql.json");
  * @returns {string}
  */
 const truncateNumber = (num) => {
-  if (num > 1e6) {
+  if (num > 1e9) {
+    return Math.floor(num / 1e9) + "B";
+  } else if (num > 1e6) {
     return Math.floor(num / 1e6) + "M";
   } else if (num > 1e3) {
     return Math.floor(num / 1e3) + "K";

@@ -1,9 +1,25 @@
 extends ../partials/layout
+include ../mixins/nood-image
 
 append config
   - var pageTitle = brand.name
 
 block body
   div.content.content-brand
-    p Placeholder for brand #{brand.name}
-    p Work in progress...
+    .header
+      .cover
+        +nood-image(brand.picture, brand.name, true)
+      .profile-picture
+        +nood-image(brand.picture, brand.name)
+      .info
+        h1= brand.name
+        .stats
+          .stat
+            h1= rank
+            span Noodstar Rank
+          .stat
+            h1= truncateNumber(videoViews)
+            span Video views
+          .stat
+            h1= truncateNumber(brand.subscribers)
+            span Subscribers

@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const pug = require("pug");
 const { getContext } = require("./context");
+const { getTopBrands } = require("./utils");
 
 const VIEW_ROOT_DIR = path.join(__dirname, "views");
 
@@ -23,40 +24,80 @@ const getPugFile = (route) => {
  * @type {Router}
  */
 const categoriesRouter = (route, context) => {
-  if (route === "/categories") {
-    const entryList = Object.keys(context.entries).map(
-      (entrySlug) => context.entries[entrySlug]
-    );
-    const sampleCategories = [];
-    Object.keys(context.categories).forEach((categorySlug) => {
-      const sampleEntry =
-        entryList.find((entry) => {
-          // Find an entry that is not already in the sample list
-          return (
-            entry.categorySlugs.includes(categorySlug) &&
-            !sampleCategories.find((sample) => sample.entrySlug === entry.slug)
-          );
-        }) ||
-        // If unable to find one, fall back to duplicate entry
-        entryList.find((entry) => {
-          return entry.categorySlug.includes(categorySlug);
-        });
-      let numVideos = 0;
-      entryList.forEach((entry) => {
-        if (entry.categorySlugs.includes(categorySlug)) {
-          numVideos++;
-        }
-      });
-      sampleCategories.push({
-        entrySlug: sampleEntry.slug,
-        categorySlug,
-        numVideos,
-      });
-    });
-    const pugFile = getPugFile("categories");
-    return pug.renderFile(pugFile, { ...context, sampleCategories });
+  if (route !== "/categories") {
+    return null;
   }
-  return null;
+
+  const entryList = Object.keys(context.entries).map(
+    (entrySlug) => context.entries[entrySlug]
+  );
+  const sampleCategories = [];
+  Object.keys(context.categories).forEach((categorySlug) => {
+    const sampleEntry =
+      entryList.find((entry) => {
+        // Find an entry that is not already in the sample list
+        return (
+          entry.categorySlugs.includes(categorySlug) &&
+          !sampleCategories.find((sample) => sample.entrySlug === entry.slug)
+        );
+      }) ||
+      // If unable to find one, fall back to duplicate entry
+      entryList.find((entry) => {
+        return entry.categorySlug.includes(categorySlug);
+      });
+    let numVideos = 0;
+    entryList.forEach((entry) => {
+      if (entry.categorySlugs.includes(categorySlug)) {
+        numVideos++;
+      }
+    });
+    sampleCategories.push({
+      entrySlug: sampleEntry.slug,
+      categorySlug,
+      numVideos,
+    });
+  });
+  const pugFile = getPugFile("categories");
+  return pug.renderFile(pugFile, { ...context, sampleCategories });
+};
+
+/**
+ * @type {Router}
+ */
+const noodstarsRouter = (route, context) => {
+  if (route !== "/noodstars") {
+    return null;
+  }
+  const topBrands = getTopBrands(context);
+  const remainingBrands = Object.keys(context.brands).filter(
+    (brandSlug) => !topBrands.includes(context.brands[brandSlug])
+  );
+  const numVideosForBrand = (brandSlug) => {
+    let numVideos = 0;
+    Object.keys(context.entries).forEach((entrySlug) => {
+      if (context.entries[entrySlug].brandSlug === brandSlug) {
+        numVideos++;
+      }
+    });
+    return numVideos;
+  };
+  const numViewsForBrand = (brandSlug) => {
+    let numViews = 0;
+    Object.keys(context.entries).forEach((entrySlug) => {
+      if (context.entries[entrySlug].brandSlug === brandSlug) {
+        numViews += context.entries[entrySlug].stats.views;
+      }
+    });
+    return numViews;
+  };
+  const pugFile = getPugFile("noodstars");
+  return pug.renderFile(pugFile, {
+    ...context,
+    topBrands,
+    remainingBrands,
+    numVideosForBrand,
+    numViewsForBrand,
+  });
 };
 
 /**
@@ -85,13 +126,33 @@ const pugFileRouter = (route, context) => {
 const brandRouter = (route, context) => {
   const match = route.match(/brand\/([A-z0-9-]+)\/?/);
   if (match) {
-    const matchingId = match[1];
-    const selectedBrand = context.brands[matchingId];
+    const brandSlug = match[1];
+    const selectedBrand = context.brands[brandSlug];
     if (selectedBrand) {
+      const topBrands = getTopBrands(context);
+      const topBrandSlugs = topBrands.map((brand) => brand.slug);
+      const rank = topBrandSlugs.includes(brandSlug)
+        ? topBrandSlugs.indexOf(brandSlug) + 1
+        : topBrandSlugs.length +
+          Object.keys(context.brands)
+            .filter((slug) => !topBrandSlugs.includes(slug))
+            .indexOf(brandSlug) +
+          1;
+      const videoViews = (() => {
+        let numViews = 0;
+        Object.keys(context.entries).forEach((entrySlug) => {
+          if (context.entries[entrySlug].brandSlug === brandSlug) {
+            numViews += context.entries[entrySlug].stats.views;
+          }
+        });
+        return numViews;
+      })();
       const pugFile = getPugFile("slugged/brand");
       return pug.renderFile(pugFile, {
         ...context,
         brand: selectedBrand,
+        rank,
+        videoViews,
       });
     }
   }
@@ -191,6 +252,7 @@ const routerPipe =
 
 const appRouter = routerPipe([
   categoriesRouter,
+  noodstarsRouter,
   pugFileRouter,
   brandRouter,
   categoryRouter,

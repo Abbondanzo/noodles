@@ -1,11 +1,11 @@
-include ./entry-image
+include ./nood-image
 
 mixin card(entry, horizontal)
   - const entryURL = `${baseURL}/view/${entry.slug}`
   li.card(class={"card-horizontal": horizontal})
     a(href=entryURL)
       div.card-image-wrapper.loadable
-        +entry-image(entry)
+        +nood-image(entry.picture, entry.title)
     .card-info
       div.card-title
         a(href=entryURL)= entry.title
