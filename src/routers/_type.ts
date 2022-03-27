@@ -1,6 +1,11 @@
 import pug from "pug";
 
-export type Context = Data & pug.Options & { baseURL: string };
+interface Extras {
+  baseURL: string;
+  routes: string[];
+}
+
+export type Context = Data & pug.Options & Extras;
 
 /**
  * A Router checks the given route, and if it can handle that route it returns a string of rendered

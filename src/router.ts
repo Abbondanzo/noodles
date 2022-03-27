@@ -14,10 +14,14 @@ import { Context, Router } from "./routers/_type";
  */
 const routerPipe =
   (routers: Router[]) =>
-  (route: string, options: pug.Options & { baseURL?: string } = {}) => {
+  (
+    route: string,
+    options: pug.Options & { baseURL?: string; routes?: string[] } = {}
+  ) => {
     const baseOptions: Context = {
       ...getContext(),
       baseURL: "",
+      routes: [],
     };
     for (const router of routers) {
       const routerResult = router(route, { ...baseOptions, ...options });
