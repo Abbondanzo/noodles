@@ -6,31 +6,51 @@
       url: https://en.wikipedia.org/wiki/Barilla_(company)
     - name: Products
       url: https://www.barilla.com/en-us/products/pasta
+    - name: Spotify Playlists
+      url: https://open.spotify.com/user/w2p1oq867ns7jele6g3lw66fk?si=e5eb17c553a74e0a
   attributes:
     Kinds: Literally everything
     Founded: "1877"
+    Founder: Pietro Barilla Sr.
     City and Country: Parma, Italy
 
 - name: San Giorgio
   sites:
     - name: Home page
-      url: https://www.ebrofoods.es/en/
+      url: https://www.sangiorgio.com/
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/Ebro_Foods
+  attributes:
+    Kinds: Spaghetti, Fettuccine, Linguine, Thin Spaghetti, Angel Hair, Capellini, Vermicelli
+    Founded: "1914"
+    Founder: Girolamo Guerrisi
+    City and Country: Lebanon, Pennsylvania, United States
 
 - name: Buitoni
   sites:
     - name: Home page
+      url: https://www.buitonifresco.com/
+    - name: Italian home page
       url: https://www.buitoni.it/en
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/Buitoni
+  attributes:
+    Kinds: Tortellini, Ravioli, Flat Pasta, Tortelloni, Sauce, Shredded Cheese
+    Founded: "1827"
+    Founder: Giovanni Battista Buitoni
+    City and Country: Sansepolcro, Toscana, Italy
 
 - name: Ronzoni
   sites:
     - name: Home page
-      url: https://www.ebrofoods.es/en/
+      url: https://ronzoni.com/
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/Ebro_Foods
+  attributes:
+    Kinds: Manicotti, Medium Shells, Mostaccioli Rigati, Orzo, Lasagna, Pastina, Perciatelli, Penne, Rotini
+    Founded: "1881"
+    Founder: Emanuele Ronzoni
+    City and Country: Harrisburg, Pennsylvania, United States
 
 - name: Rao's
   sites:
@@ -38,11 +58,23 @@
       url: http://raosrestaurants.com/
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/Rao%27s
+  attributes:
+    Kinds: Spaghetti, Fusilli, Linguine, Penne
+    Founded: "1896"
+    Founder: Joshua Anthony Rao
+    City and Country: East Harlem, New York City, United States
 
 - name: De Cecco
   sites:
+    - name: Home page
+      url: https://www.dececco.com/us_us/
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/De_Cecco
+  attributes:
+    Kinds: Fusilli, Farfalle, Linguine, Spaghetti, Penne
+    Founded: "1886"
+    Founders: De Cecco brothers
+    City and Country: Fara San Martino, Abruzzo, Italy
 
 - name: Trader Joe's
   sites:
@@ -50,13 +82,30 @@
       url: https://www.traderjoes.com/home
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/Trader_Joe%27s
+  attributes:
+    Kinds: Spaghetti, Bucatini, Fusilli, Cascatelli
+    Founded: "1958"
+    Founder: Joe Coulombe
+    City and Country: Monrovia, California, United States
 
 - name: 365 Everyday Value
   sites:
     - name: Wikipedia
       url: https://en.wikipedia.org/wiki/List_of_Amazon_brands#365
+    - name: Products
+      url: https://www.wholefoodsmarket.com/products/pantry-essentials/pasta-noodles
+  attributes:
+    Kinds: Ravioli, Tortellini, Spaghetti, Rotini, Fusilli, Farfalle
+    Founded: "1980"
+    Founders: John Mackey, Renee Lawson Hardy
+    City and Country: Austin, Texas, United States
 
 - name: Mueller's
   sites:
     - name: Home page
       url: https://www.muellerspasta.com/
+  attributes:
+    Kinds: Penne, Campanelle, Shells, Elbows, Mostaccioli, Rotelli, Rotini, Ruffles, Ziti, ANgel Hair, Fettuccini, Lasagna, Linguine, Spaghetti
+    Founded: "1867"
+    Founder: Christian F. Mueller
+    City and Country: Jersey City, New Jersey, United States
