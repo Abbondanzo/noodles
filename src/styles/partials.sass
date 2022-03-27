@@ -71,3 +71,37 @@
 
             &::before
               right: 0
+
+#body-main
+  flex: 1
+
+#footer
+  background-color: #1b1b1b
+
+  .content
+    display: grid
+    justify-content: center
+    align-content: center
+    grid-template-columns: repeat(3, 1fr)
+    grid-column-gap: 16px
+    padding: 20px 0
+
+  .footer-block
+    color: #aaa
+
+    li
+      margin-bottom: 8px
+
+    a
+      color: $primary-color
+      font-size: 14px
+
+      &:hover
+        text-decoration: underline
+
+.post-footer
+  padding: 16px
+
+  .copyright
+    text-align: center
+    color: #666

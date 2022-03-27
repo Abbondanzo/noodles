@@ -1,5 +1,4 @@
 - var title = `${pageTitle ? `${pageTitle} | ` : ''} Nood Pictures`
-- var fullURL = `https://nood.pictures`
 
 title=title
 meta(name="description" content=description)
@@ -11,7 +10,7 @@ link(rel="icon" type="image/png" sizes="16x16" href=`${baseURL}/assets/img/favic
 link(rel="shortcut icon" href=`${baseURL}/assets/img/favicon.ico`)
 meta(name="msapplication-TileColor" content="#000000")
 meta(name="msapplication-config" content=`${baseURL}/assets/img/browserconfig.xml`)
-meta(property="og:image" content=`${fullURL}${ogImagePath}`)
+meta(property="og:image" content=`${baseURL}${ogImagePath}`)
 meta(property="og:image:alt" content="Spicy noods")
 meta(property="og:title" content=title)
 meta(property="og:type" content="website")
