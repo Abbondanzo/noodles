@@ -25,7 +25,7 @@ const collectRoutes = () => {
     ...fs
       .readdirSync(path.join(VIEWS_DIR, "information"))
       .filter((file) => file.endsWith(".pug"))
-      .map((view) => "/" + view.replace(/\.pug$/, ""))
+      .map((view) => "/information/" + view.replace(/\.pug$/, ""))
   );
 
   // All /view/entrySlug routes
@@ -62,8 +62,8 @@ const writeFiles = () => {
   }
 
   routes.forEach((route) => {
-    const doctype = route === "sitemap" ? "xml" : "html";
-    const html = appRouter(route, { pretty: true, doctype, baseURL });
+    const doctype = route === "/sitemap" ? "xml" : "html";
+    const html = appRouter(route, { pretty: true, doctype, baseURL, routes });
 
     if (!html) {
       console.log(`No HTML content served by route ${route}. Skipping...`);
