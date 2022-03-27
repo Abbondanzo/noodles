@@ -1,0 +1,39 @@
+mixin footerLinksList(links)
+  ul
+    each link in links
+      li
+        - var qualifiedURL = link.path.startsWith("/") ? `${baseURL}${link.path}` : link.path
+        a(href=qualifiedURL)= link.name
+
+#footer
+  .content
+    .footer-block
+      h3 Information
+      - 
+        var links = [
+          {path: "/information/terms-and-conditions", name: "Terms & Conditions"},
+          {path: "/information/privacy-policy", name: "Privacy Policy"},
+          {path: "/information/dmca", name: "DMCA"},
+        ]
+      +footerLinksList(links)
+    .footer-block
+      h3 Support
+      - 
+        var links = [
+          {path: "/information/faq", name: "FAQ"},
+          {path: "/information/contact-support", name: "Contact Support"},
+          {path: "/information/feedback", name: "Feedback"},
+          {path: "/information/parental-controls", name: "Parental Controls"},
+        ]
+      +footerLinksList(links)
+    .footer-block
+      h3 Discover
+      ul
+        li 
+          a(href="#") Visually Impaired
+        li
+          a(href="#") Shop
+        li
+          a(href="https://github.com/Abbondanzo/noodles") GitHub
+.post-footer.content
+  .copyright Not &copy; Nood.pictures #{new Date().getFullYear()}

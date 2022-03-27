@@ -20,6 +20,14 @@ const collectRoutes = () => {
   const dataFile = fs.readFileSync(dataOutputFile).toString("utf-8");
   const rawData: Data = JSON.parse(dataFile);
 
+  // All /information/ routes
+  routes.push(
+    ...fs
+      .readdirSync(path.join(VIEWS_DIR, "information"))
+      .filter((file) => file.endsWith(".pug"))
+      .map((view) => "/" + view.replace(/\.pug$/, ""))
+  );
+
   // All /view/entrySlug routes
   routes.push(
     ...Object.keys(rawData.entries).map((entrySlug) => `/view/${entrySlug}`)
