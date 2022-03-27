@@ -17,21 +17,23 @@ export const brandRouter: Router = (route, context) => {
             .filter((slug) => !topBrandSlugs.includes(slug))
             .indexOf(brandSlug) +
           1;
-      const videoViews = (() => {
-        let numViews = 0;
-        Object.keys(context.entries).forEach((entrySlug) => {
-          if (context.entries[entrySlug].brandSlug === brandSlug) {
-            numViews += context.entries[entrySlug].stats.views;
-          }
-        });
-        return numViews;
-      })();
+      const videos: Entry[] = [];
+      let numVideoViews = 0;
+      Object.keys(context.entries).forEach((entrySlug) => {
+        const entry = context.entries[entrySlug];
+        if (entry.brandSlug === brandSlug) {
+          videos.push(entry);
+          numVideoViews += entry.stats.views;
+        }
+      });
+
       const pugFile = getPugFile("slugged/brand");
       return pug.renderFile(pugFile, {
         ...context,
         brand: selectedBrand,
         rank,
-        videoViews,
+        numVideoViews,
+        videos,
       });
     }
   }

@@ -1,4 +1,5 @@
 extends ../partials/layout
+include ../mixins/card
 include ../mixins/nood-image
 
 append config
@@ -18,7 +19,7 @@ block body
             h1= rank
             span Noodstar Rank
           .stat
-            h1= truncateNumber(videoViews)
+            h1= truncateNumber(numVideoViews)
             span Video views
           .stat
             h1= truncateNumber(brand.subscribers)
@@ -28,9 +29,22 @@ block body
         h3 Description
         p= brand.description
       .links
+        h3 Links
         ul
           each site in brand.sites
             li
               a(href=site.url)
                 img.icon(src=`${baseURL}/assets/icons/link.svg`)
                 | #{site.name}
+      .about
+        h3 About
+        ul
+          each value, key in brand.attributes
+            li
+              span.bold #{key}:
+              span= value
+    .videos
+      .title Videos Featuring #{brand.name}
+      ul.card-grid
+        each entry in videos
+          +card(entry)
