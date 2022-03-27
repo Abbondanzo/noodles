@@ -3,6 +3,8 @@ include ../mixins/card
 
 append config
   - var pageTitle = category.name
+  - var description = `All noods in the ${category.name} category`
+  - var ogImagePath = `${baseURL}/assets/img/noods/${filteredEntries[0].picture.fileName}`
 
 block body
   div.content.content-category

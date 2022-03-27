@@ -4,6 +4,8 @@ include ../mixins/nood-image
 
 append config
   - var pageTitle = entry.title
+  - var description = entry.title
+  - var ogImagePath = `${baseURL}/assets/img/noods/${entry.picture.fileName}`
 
 block body
   div.content.content-view
