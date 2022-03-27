@@ -20,7 +20,7 @@ block body
             span Noodstar Rank
           .stat
             h1= truncateNumber(numVideoViews)
-            span Video views
+            span Nood views
           .stat
             h1= truncateNumber(brand.subscribers)
             span Subscribers
@@ -44,7 +44,7 @@ block body
               span.bold #{key}:
               span= value
     .videos
-      .title Videos Featuring #{brand.name}
+      .title Noods Featuring #{brand.name}
       ul.card-grid
         each entry in videos
           +card(entry)
