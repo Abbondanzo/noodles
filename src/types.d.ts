@@ -10,6 +10,7 @@ interface Brand {
   subscribers: number;
   picture: Picture;
   sites: { name: string; url: string }[];
+  attributes: { [key: string]: string };
 }
 
 interface Category {

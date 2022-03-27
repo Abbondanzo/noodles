@@ -25,7 +25,10 @@ export const generateBrands = () => {
       invert: getRandom() <= CHANCE_TO_INVERT_PICTURE,
       fileName: photoGenerator.next().value,
     };
-
+    const attributes: { [key: string]: string } = {};
+    Object.keys(brandObject.attributes).forEach((attributeKey) => {
+      attributes[attributeKey] = String(brandObject.attributes[attributeKey]);
+    });
     brandMap[slug] = {
       slug,
       name,
@@ -33,6 +36,7 @@ export const generateBrands = () => {
       picture,
       subscribers,
       sites,
+      attributes,
     };
   });
   return brandMap;
