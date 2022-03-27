@@ -2,6 +2,9 @@
   .header
     position: relative
 
+    h1
+      font-size: 2em
+
     .cover
       background-color: #111
       height: 280px
@@ -52,3 +55,55 @@
 
           span
             font-size: 12px
+
+  .info
+    background-color: #1b1b1b
+    padding: 20px
+    display: grid
+    justify-content: center
+    align-content: center
+    grid-template-columns: auto
+    grid-auto-flow: column
+    grid-column-gap: 16px
+
+    p
+      font-size: 14px
+      color: #ccc
+
+    .links
+      .icon
+        width: 12px
+        height: 12px
+        margin-right: 8px
+
+      ul
+        list-style: none
+
+        li
+          margin-bottom: 16px
+
+    .about
+      li
+        color: #ccc
+        font-size: 14px
+        margin-bottom: 8px
+
+        .bold
+          font-weight: bold
+          color: white
+          margin-right: 4px
+
+  .videos
+    .card-grid
+      display: grid
+      justify-content: center
+      align-content: center
+      grid-template-rows: auto
+      grid-template-columns: repeat(4, 1fr)
+      grid-row-gap: 16px
+      grid-column-gap: 16px
+
+    .title
+      font-weight: bold
+      font-size: 14px
+      margin: 1.5em 0

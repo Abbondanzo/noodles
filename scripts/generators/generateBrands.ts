@@ -1,3 +1,4 @@
+import { brandDescriptions } from "./../shared/rawData";
 import { brands, photos } from "../shared/rawData";
 import {
   createArrayGenerator,
@@ -11,23 +12,31 @@ const MIN_SUBSCRIBERS = 15;
 const MAX_SUBSCRIBERS = 5e5;
 
 const photoGenerator = createArrayGenerator(photos);
+const brandDescriptionGenerator = createArrayGenerator(brandDescriptions);
 
 export const generateBrands = () => {
   const brandMap: { [key: string]: Brand } = {};
-  brands.forEach((brand) => {
-    const slug = escapeURL(brand);
-    const subscribers = Math.round(
-      getRandomInRange(MIN_SUBSCRIBERS, MAX_SUBSCRIBERS)
-    );
+  brands.forEach((brandObject) => {
+    const name = brandObject.name;
+    const slug = escapeURL(name);
+    const subscribers = getRandomInRange(MIN_SUBSCRIBERS, MAX_SUBSCRIBERS);
+    const sites: Brand["sites"] = brandObject.sites;
     const picture: Picture = {
       invert: getRandom() <= CHANCE_TO_INVERT_PICTURE,
-      fileName: String(photoGenerator.next().value),
+      fileName: photoGenerator.next().value,
     };
+    const attributes: { [key: string]: string } = {};
+    Object.keys(brandObject.attributes).forEach((attributeKey) => {
+      attributes[attributeKey] = String(brandObject.attributes[attributeKey]);
+    });
     brandMap[slug] = {
       slug,
-      name: brand,
+      name,
+      description: brandDescriptionGenerator.next().value,
       picture,
       subscribers,
+      sites,
+      attributes,
     };
   });
   return brandMap;

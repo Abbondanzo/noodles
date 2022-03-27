@@ -17,7 +17,8 @@
   "dependencies": {
     "node-sass": "7.0.1",
     "pug": "3.0.2",
-    "sharp": "0.30.2"
+    "sharp": "0.30.2",
+    "yaml": "2.0.0-11"
   },
   "devDependencies": {
     "@types/node-static": "0.7.7",

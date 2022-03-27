@@ -21,7 +21,7 @@ export const generateSections = (entryIds: string[]): Section[] => {
     let numEntriesInSection =
       index === 0 ? NUM_ENTRIES_FIRST_SECTION : NUM_ENTRIES_PER_SECTION;
     while (numEntriesInSection > 0) {
-      const entryId = String(entryIdGenerator.next().value);
+      const entryId = entryIdGenerator.next().value;
       sectionEntryIds.push(entryId);
       numEntriesInSection--;
     }
