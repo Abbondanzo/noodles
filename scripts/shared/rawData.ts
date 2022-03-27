@@ -1,11 +1,18 @@
 import fs from "fs";
 import path from "path";
+import { parse } from "yaml";
 import { readPlaintextFile } from "./utils";
 
 const dataDir = path.join(__dirname, "..", "..", "data");
 
-export const brands = JSON.parse(
-  fs.readFileSync(path.join(dataDir, "brands.json")).toString("utf8")
+interface RawBrand {
+  name: string;
+  sites: { name: string; url: string }[];
+  attributes: { [key: string]: any };
+}
+
+export const brands: RawBrand[] = parse(
+  fs.readFileSync(path.join(dataDir, "brands.yml")).toString("utf8")
 );
 
 export const brandDescriptions = readPlaintextFile(
