@@ -4,12 +4,12 @@
   "description": "Spicy noodle pictures",
   "main": "compile.js",
   "scripts": {
-    "serve": "ts-node-dev --files ./scripts/serve",
+    "serve": "ts-node-dev --files -- ./scripts/serve",
     "build": "npm run clean && npm run build:assets && npm run build:data && npm run build:sass && npm run build:html",
     "clean": "ts-node ./scripts/clean",
-    "build:assets": "ts-node ./scripts/copy-assets",
-    "build:data": "ts-node  --files ./scripts/generate-data",
-    "build:html": "ts-node --files ./scripts/compile-html",
+    "build:assets": "ts-node -- ./scripts/copy-assets",
+    "build:data": "ts-node  --files -- ./scripts/generate-data",
+    "build:html": "ts-node --files -- ./scripts/compile-html",
     "build:sass": "node-sass src/styles/main.sass -o dist/styles --output-style compressed"
   },
   "author": "Peter Abbondanzo",
