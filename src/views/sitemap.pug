@@ -8,8 +8,8 @@ urlset(
   each path, index in routes
     url
       loc= baseURL + path
-      if index === 0
-        priority= '1.00'
+      if path === "/"
+        priority= "1.00"
       else
-        priority= '0.80'
+        priority= "0.80"
       lastmod= new Date().toISOString()
