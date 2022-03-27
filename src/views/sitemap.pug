@@ -7,10 +7,10 @@ urlset(
 )
   each path, index in routes
     url
-      loc= baseURL + path
       if path === "/index"
         loc= baseURL
         priority= "1.00"
       else
+        loc= baseURL + path
         priority= "0.80"
       lastmod= new Date().toISOString()
