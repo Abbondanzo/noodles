@@ -8,7 +8,8 @@ urlset(
   each path, index in routes
     url
       loc= baseURL + path
-      if path === "/"
+      if path === "/index"
+        loc= baseURL
         priority= "1.00"
       else
         priority= "0.80"

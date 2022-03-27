@@ -15,9 +15,6 @@ const collectRoutes = () => {
       .readdirSync(VIEWS_DIR)
       .filter((file) => file.endsWith(".pug"))
       .map((view) => "/" + view.replace(/\.pug$/, ""))
-      .map((view) =>
-        view.endsWith("index") ? view.replace(/index$/, "") : view
-      )
   );
 
   const dataFile = fs.readFileSync(dataOutputFile).toString("utf-8");
