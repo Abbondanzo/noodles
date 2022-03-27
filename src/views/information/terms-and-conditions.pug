@@ -4,6 +4,14 @@ append config
   - var pageTitle = "Terms and Conditions"
 
 block body
-  div.content
+  div.content.information-page
     h1.title Terms and Conditions
-    p Work in progress...
+    span Last modified #{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    p By accessing, using, or visiting #[a(href=baseURL)= baseURL] (the "Website"), any of its amazing content, crappy functionality, and seemingly anything else we've made for it along the way, you have unknowingly and without choice have signified your agreement to these terms and conditions.
+    p This site is a parody, it's entirely fictional. Even content that is based on real life is coincidental. I am not responsible for any content that violates community standards in your community.
+    p Isn't it quite wild how websites will just list this as their terms and conditions? It's like if you walked into a restaurant and they were like, "Welp, you knowingly walked into here so you've agreed to share with us all of your browsing history. Oh, you don't want to? Well you can't eat here."
+    p We know it's not a fair comparison, but then again it's a liability/"don't be an asshole" thing. It's the same reason a library can and should be able to kick you out for being a loud jerk. Just because you #[i can] be an asshole doesn't mean you should.
+    p And look, here's the reality of this website. I don't care what you do with it. Scrape all of its data and host your own version of it. Access it as much as you'd like for as long as you'd like. Everything is hosted on GitHub Pages anyhow so I'm not paying for bandwidth. Want to DDoS this site? Have at it.
+    p Something something #[i cookies], something something #[i user security]. It's a static site, there's none of that here. I tried to build as much of this thing as best as I could with a templating engine so that you don't have to load a single line of JavaScript, but then I realized I wanted to add a few funny features with scripts so that didn't pan out fully. There are no user accounts because everything works through GitHub (oh look, I'm repeating myself) so if you want a terms and conditions to agree to, #[a(href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service") do it there].
+    p I will say this, however: if you make any PRs to upload content or fix anything, be considerate and intentional. Send me vague pictures of your favorite noodles but I don't care what your pets look like, or about that family photo from a trip that you went on in 2013.
+    p I wrote all of this out just as filler. I wanted to make it look official and scary and I think I succeeded. So if you made it this far, I commend your efforts and I want to reword you for you hard work. Click #[a(href="https://www.youtube.com/watch?v=nn5q38-5ZLQ") here] for your reward.
