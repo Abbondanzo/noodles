@@ -27,29 +27,41 @@ const copyRecursive = (source: string, target: string): number => {
   return 0;
 };
 
+const compressNoodPhotos = async (
+  sourceDir: string,
+  targetDir: string,
+  width: number,
+  height: number
+) => {
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir);
+  }
+  const promises = fs.readdirSync(sourceDir).map((file) => {
+    const filePath = path.join(sourceDir, file);
+    if (!fs.statSync(filePath).isFile()) {
+      return Promise.resolve();
+    }
+    return sharp(filePath)
+      .resize({
+        width,
+        height,
+        fit: sharp.fit.cover,
+      })
+      .toFile(path.join(targetDir, file));
+  });
+  await Promise.all(promises);
+};
+
 const copyNoodPhotos = async () => {
   const noodsSourceDir = path.join(ROOT_DIR, "data", "photos");
   const noodsTargetDir = path.join(ROOT_DIR, "dist", "assets", "img", "noods");
   const numPhotosCopied = copyRecursive(noodsSourceDir, noodsTargetDir);
 
   // Compressing files here too
-  if (!fs.existsSync(path.join(noodsTargetDir, "min"))) {
-    fs.mkdirSync(path.join(noodsTargetDir, "min"));
-  }
-  const promises = fs.readdirSync(noodsTargetDir).map((file) => {
-    const filePath = path.join(noodsTargetDir, file);
-    if (!fs.statSync(filePath).isFile()) {
-      return Promise.resolve();
-    }
-    return sharp(filePath)
-      .resize({
-        width: 300,
-        height: 180,
-        fit: sharp.fit.cover,
-      })
-      .toFile(path.join(noodsTargetDir, "min", file));
-  });
-  await Promise.all(promises);
+  const noodsMinDir = path.join(noodsTargetDir, "min");
+  await compressNoodPhotos(noodsTargetDir, noodsMinDir, 300, 180);
+  const noodsProfileDir = path.join(noodsTargetDir, "profile");
+  await compressNoodPhotos(noodsTargetDir, noodsProfileDir, 360, 360);
 
   return numPhotosCopied;
 };

@@ -5,7 +5,7 @@ mixin card(entry, horizontal)
   li.card(class={"card-horizontal": horizontal})
     a(href=entryURL)
       div.card-image-wrapper.loadable
-        +nood-image(entry.picture, entry.title)
+        +nood-image(entry.picture, entry.title, "min")
     .card-info
       div.card-title
         a(href=entryURL)= entry.title

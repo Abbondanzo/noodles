@@ -1,7 +1,6 @@
-mixin nood-image(picture, alt, fullsize=false)
+mixin nood-image(picture, alt, type="min")
   - const imgPath = `${baseURL}/assets/img/noods/${picture.fileName}`
+  - const profileImgPath = `${baseURL}/assets/img/noods/profile/${picture.fileName}`
   - const minImgPath = `${baseURL}/assets/img/noods/min/${picture.fileName}`
-  picture
-    source(media="(max-width:400px)", srcset=minImgPath)
-    source(media="(min-width:401px)", srcset=imgPath)
-    img.nood-image(src=fullsize ? imgPath : minImgPath, alt=picture.title, class={ "inverted": picture.invert })
+  - const src = type === "min" ? minImgPath : type === "profile" ? profileImgPath : imgPath
+  img.nood-image(src=src alt=picture.title class={ "inverted": picture.invert })

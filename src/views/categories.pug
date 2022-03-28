@@ -14,7 +14,7 @@ block body
         li.card
           a(href=categoryURL)
             div.card-image-wrapper
-              +nood-image(entry.picture, entry.title)
+              +nood-image(entry.picture, entry.title, "min")
             .category-overlay
             .category-info
               h2= categories[sample.categorySlug].name

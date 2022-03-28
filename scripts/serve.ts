@@ -51,6 +51,7 @@ const createNoodsServer = (): ChainableHandler => {
         .addListener("end", () => {
           req.url = req.url.split("/assets/img/noods")[1];
           req.url = req.url.replace("/min", "");
+          req.url = req.url.replace("/profile", "");
           noodPhotoServer.serve(req, res);
         })
         .resume();
