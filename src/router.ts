@@ -3,6 +3,7 @@ import { getContext } from "./context";
 import { brandRouter } from "./routers/brand";
 import { categoriesRouter } from "./routers/categories";
 import { categoryRouter } from "./routers/category";
+import { communityRouter } from "./routers/community";
 import { noodstarsRouter } from "./routers/noodstars";
 import { pugFileRouter } from "./routers/pug-file";
 import { viewEntryRouter } from "./routers/view-entry";
@@ -34,6 +35,7 @@ const routerPipe =
 
 export const appRouter = routerPipe([
   categoriesRouter,
+  communityRouter,
   noodstarsRouter,
   pugFileRouter,
   brandRouter,

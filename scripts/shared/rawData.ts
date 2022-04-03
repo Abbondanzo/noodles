@@ -23,8 +23,12 @@ export const categories = readPlaintextFile(
   path.join(dataDir, "categories.txt")
 );
 
+export const comments = readPlaintextFile(path.join(dataDir, "comments.txt"));
+
 export const sections = readPlaintextFile(path.join(dataDir, "sections.txt"));
 
 export const titles = readPlaintextFile(path.join(dataDir, "titles.txt"));
 
 export const photos = fs.readdirSync(path.join(dataDir, "photos"));
+
+export const usernames = readPlaintextFile(path.join(dataDir, "usernames.txt"));

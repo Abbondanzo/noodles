@@ -1,9 +1,28 @@
 extends ./partials/layout
+include ./mixins/nood-image
 
 append config
   - var pageTitle = "Community"
+  - var description = "See how our community is slurping up hundreds of noods all around the world. Even preview some of our members having existential crisis for free!"
 
 block body
-  div.content
+  div.content.content-community
     h1.title Community
-    p Work in progress...
+    .comment-feed
+      each feedItem in commentFeed
+        .comment
+          - const entryURL = `${baseURL}/view/${feedItem.entry.slug}`
+          .comment-info
+            .comment-header
+              .user-avatar #{feedItem.comment.username[0]}
+              .comment-meta
+                .comment-title
+                  span.username= feedItem.comment.username
+                  span wrote a comment
+                .comment-slug
+                  span Posted to 
+                  a(href=entryURL)= feedItem.entry.title
+            .comment-body= feedItem.comment.body
+          a(href=entryURL)
+            .video-preview
+              +nood-image(feedItem.entry.picture, feedItem.entry.title, "min")
