@@ -1,0 +1,52 @@
+@import "../variables"
+
+.content-community
+  .comment
+    background-color: #111
+    padding: 16px
+    display: flex
+    justify-content: space-between
+    margin-bottom: 24px
+
+    .comment-info
+      margin-right: 16px
+
+      .comment-header
+        display: flex
+
+        .user-avatar
+          flex-shrink: 0
+          display: flex
+          align-items: center
+          justify-content: center
+          background-color: #6e6e6e
+          width: 36px
+          height: 36px
+          border-radius: 50%
+          font-weight: bold
+          margin-right: 8px
+
+        .username
+          color: $primary-color
+          font-weight: bold
+          margin-right: 4px
+
+        .comment-title
+          margin-bottom: 8px
+
+        .comment-slug, .comment-slug a
+          color: #6b6b6b
+          font-size: 12px
+
+          a:hover
+            color: $primary-color
+
+      .comment-body
+        font-size: 14px
+        color: #ddd
+        margin-top: 16px
+
+    .video-preview
+      width: 240px
+      aspect-ratio: 1.8
+      overflow: hidden
