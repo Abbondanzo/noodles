@@ -18,6 +18,11 @@ interface Category {
   name: string;
 }
 
+interface EntryComment {
+  username: string;
+  body: string;
+}
+
 interface Entry {
   title: string;
   slug: string;
@@ -31,6 +36,7 @@ interface Entry {
     favorites: number;
   };
   picture: Picture;
+  comments: EntryComment[];
 }
 
 interface Section {

@@ -1,5 +1,6 @@
 import { photos, titles } from "../shared/rawData";
 import { createArrayGenerator, escapeURL, getRandom } from "../shared/utils";
+import { generateEntryComments } from "./generateEntryComments";
 import { generateStats } from "./generateStats";
 
 const CHANCE_TO_INVERT_PICTURE = 0.3;
@@ -78,6 +79,7 @@ export const generateEntries = (
       categorySlugs: titleCategories,
       stats: generateStats(),
       picture,
+      comments: generateEntryComments(),
     };
   });
 
