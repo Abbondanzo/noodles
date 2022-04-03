@@ -178,6 +178,71 @@
         font-size: 14px
         margin-bottom: 8px
 
+    .comments-row
+      margin: 16px
+      background-color: #111
+
+      .title
+        font-weight: bold
+        font-size: 14px
+        margin-bottom: 8px
+        background-color: #222
+        padding: 8px
+      
+      .comments
+        padding: 16px
+
+        .comment
+          display: flex
+          
+          &:not(:first-child)
+            margin-top: 24px
+
+          .user-avatar
+            flex-shrink: 0
+            display: flex
+            align-items: center
+            justify-content: center
+            background-color: #6e6e6e
+            width: 36px
+            height: 36px
+            border-radius: 50%
+            font-weight: bold
+            margin-right: 8px
+
+          .comment-body
+            .username
+              color: $primary-color
+              font-weight: bold
+
+            .text
+              font-size: 14px
+              color: #ddd
+            
+            .interactions
+              color: #ccc
+              font-weight: normal
+              font-size: 12px
+              display: flex
+              margin-top: 8px
+
+              .icon
+                width: 16px
+                height: 16px
+                opacity: 0.5
+                margin-right: 4px
+
+              & > *
+                cursor: pointer
+                display: flex
+                align-items: center
+
+                &:not(:first-child)
+                  margin-left: 16px
+
+                &:hover
+                  opacity: 0.8
+
   .sidebar-column
     margin-left: 16px
     margin-top: 16px

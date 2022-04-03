@@ -62,6 +62,21 @@ block body
           each entry in relatedVideos
             +card(entry)
       .divider
+      .comments-row
+        .title All Comments (#{entry.comments.length})
+        .comments
+          each comment in entry.comments
+            .comment
+              .user-avatar #{comment.username[0]}
+              .comment-body
+                .username= comment.username
+                .text= comment.body
+                .interactions
+                  .likes.pseudo-interactive
+                    img.icon(src=`${baseURL}/assets/icons/thumbs-up.svg`)
+                    span= 1
+                  .dislikes.pseudo-interactive
+                    img.icon(src=`${baseURL}/assets/icons/thumbs-down.svg`)
     .sidebar-column
       .title Recommended
       .sidebar-videos
