@@ -21,6 +21,7 @@ interface Category {
 interface EntryComment {
   username: string;
   body: string;
+  likes: number;
 }
 
 interface Entry {
