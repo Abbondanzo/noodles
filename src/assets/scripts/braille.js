@@ -104,20 +104,42 @@ const undoRewrite = () => {
   }
 };
 
-document
-  .getElementById("enable-visually-impaired")
-  .addEventListener("click", () => {
-    rewriteBraille();
-    document
-      .getElementById("disable-visually-impaired")
-      .classList.remove("hidden");
-  });
+const runBrailleScript = () => {
+  const ENABLE_ID = "enable-visually-impaired";
+  const DISABLE_ID = "disable-visually-impaired";
+  const LOCAL_STORAGE_KEY = "visually-impaired-enabled";
 
-document
-  .getElementById("disable-visually-impaired")
-  .addEventListener("click", () => {
+  const enable = () => {
+    rewriteBraille();
+    document.getElementById(DISABLE_ID).classList.remove("hidden");
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, "true");
+    } catch (e) {
+      // Do nothing
+    }
+  };
+
+  const disable = () => {
     undoRewrite();
-    document
-      .getElementById("disable-visually-impaired")
-      .classList.add("hidden");
-  });
+    document.getElementById(DISABLE_ID).classList.add("hidden");
+    try {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    } catch (e) {
+      // Do nothing
+    }
+  };
+
+  document.getElementById(ENABLE_ID).addEventListener("click", enable);
+  document.getElementById(DISABLE_ID).addEventListener("click", disable);
+
+  // Check if enabled
+  try {
+    if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      enable();
+    }
+  } catch (e) {
+    // Do nothing
+  }
+};
+
+runBrailleScript();
