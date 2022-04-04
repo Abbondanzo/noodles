@@ -31,7 +31,7 @@ mixin footerLinksList(links)
       h3 Discover
       ul
         li 
-          a(href="#") Visually Impaired
+          span#enable-visually-impaired Visually Impaired
         li
           a(href="https://www.loveandlemons.com/homemade-pasta-recipe/") Premium Noods
         li
@@ -40,3 +40,6 @@ mixin footerLinksList(links)
           a(href="https://github.com/Abbondanzo/noodles") GitHub
 .post-footer.content
   .copyright Not &copy; Nood.pictures #{new Date().getFullYear()}
+tooltip#disable-visually-impaired.hidden Disable Visually Impaired Mode
+
+script(src=`${baseURL}/assets/scripts/visually-impaired.js`)
