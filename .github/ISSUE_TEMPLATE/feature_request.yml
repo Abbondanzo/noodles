@@ -1,0 +1,29 @@
+name: "Feature Request"
+description: "I would like to see some new feature added (or improved)"
+body:
+  - type: markdown
+    attributes:
+      value: Kudos for getting this far in the process. If any box is not relevant, feel free to write "N.A."
+
+  - type: textarea
+    attributes:
+      label: What problem are you trying to solve?
+      description: |
+        Describe the problem in a few sentences
+      placeholder: |
+        I have a hard time using xyz...
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: What does the solution look like?
+      description: |
+        Feel free to include drawings, other examples of inspiration, or any aids that can assist your solution.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: Any details that might otherwise help

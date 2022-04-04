@@ -6,6 +6,7 @@ For example:
 - Added a runtime check which exits data generation script if missing a parameter
 - Fixed an issue where long titles incorrectly wrap
 - Changed all uses of the word "brand" to "star"
+- Added new data
 -->
 
 **Changes:**
