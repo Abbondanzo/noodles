@@ -1,4 +1,10 @@
+@import "../variables"
+
 .content-noodstars
+  .title
+    @media screen and (max-width: $mobile-width)
+      padding: 0 16px
+
   .card-grid-top
     display: grid
     justify-content: center
@@ -9,6 +15,13 @@
     grid-column-gap: 16px
     padding: 20px 0
 
+    @media screen and (max-width: $tablet-width)
+      grid-template-columns: repeat(2, 1fr)
+
+    @media screen and (max-width: $mobile-width)
+      grid-template-columns: repeat(1, 1fr)
+      padding: 20px 16px
+
   .card-grid-remaining
     display: grid
     justify-content: center
@@ -18,6 +31,13 @@
     grid-row-gap: 16px
     grid-column-gap: 16px
     padding: 20px 0
+
+    @media screen and (max-width: $tablet-width)
+      grid-template-columns: repeat(3, 1fr)
+
+    @media screen and (max-width: $mobile-width)
+      grid-template-columns: repeat(1, 1fr)
+      padding: 20px 16px
 
   .card
     .card-image-wrapper

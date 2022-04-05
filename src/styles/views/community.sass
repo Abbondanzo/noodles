@@ -8,8 +8,14 @@
     justify-content: space-between
     margin-bottom: 24px
 
+    @media screen and (max-width: $mobile-width)
+      flex-direction: column-reverse
+
     .comment-info
       margin-right: 16px
+
+      @media screen and (max-width: $mobile-width)
+        margin-top: 16px
 
       .comment-header
         display: flex
