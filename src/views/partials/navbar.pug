@@ -1,3 +1,11 @@
+- 
+  const pages = [
+    {path: "/", name: "Home"},
+    {path: "/categories", name: "Categories"},
+    {path: "/noodstars", name: "Noodstars"},
+    {path: "/community", name: "Community"},
+  ]
+
 navbar#navbar
   .content
     .flex-container
@@ -5,15 +13,22 @@ navbar#navbar
         a(href=`${baseURL}/`)
           include nood-logo.svg
       .links
-        - 
-          var pages = [
-            {path: "/", name: "Home"},
-            {path: "/categories", name: "Categories"},
-            {path: "/noodstars", name: "Noodstars"},
-            {path: "/community", name: "Community"},
-          ]
         each page in pages
           a(href=`${baseURL}${page.path}`)
-            .link#home(class={ "active": page.name === pageTitle })= page.name
+            .link(class={ "active": page.name === pageTitle })= page.name
       .cta
         a(href="https://github.com/Abbondanzo/noodles#how-to-add-data") Upload
+
+      .mobile
+        input#toggle(type="checkbox")
+        label.button(for="toggle")
+          span
+
+        ul.mobile-links          
+          each page in pages
+            a(href=`${baseURL}${page.path}`)
+              li.mobile-link(class={ "active": page.name === pageTitle })= page.name
+
+
+          a(href="https://github.com/Abbondanzo/noodles#how-to-add-data") 
+            .cta Upload

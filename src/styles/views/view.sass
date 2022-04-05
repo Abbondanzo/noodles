@@ -3,6 +3,9 @@
 .content-view
   display: flex
 
+  @media screen and (max-width: $tablet-width)
+    flex-direction: column
+
   .card-grid
     display: grid
     justify-content: center
@@ -74,6 +77,12 @@
         display: flex
         justify-content: space-between
 
+        @media screen and (max-width: $mobile-width)
+          flex-direction: column
+
+          & > *
+            margin-bottom: 8px
+
         .icon
           width: 16px
           height: 16px
@@ -85,11 +94,21 @@
           font-weight: normal
           font-size: 12px
 
+          @media screen and (max-width: $mobile-width)
+            justify-content: center
+
+            span
+              display: none
+
           & > *
             cursor: pointer
             margin-left: 16px
             display: flex
             align-items: center
+
+            &:not(:first-child)
+              margin-left: 16px
+
             &:hover
               opacity: 0.8
 
@@ -97,6 +116,10 @@
       margin: 24px 16px
       display: flex
       align-items: center
+
+      @media screen and (max-width: $mobile-width)
+        flex-direction: column
+        text-align: center
 
       .brand-avatar
         position: relative
@@ -142,6 +165,10 @@
         box-sizing: border-box
         cursor: pointer
 
+        @media screen and (max-width: $mobile-width)
+          margin-left: 0
+          margin-top: 8px
+
         &:hover
           border-color: $primary-color
           color: $primary-color
@@ -172,6 +199,9 @@
 
       .card-grid
         grid-template-columns: repeat(3, 1fr)
+
+        @media screen and (max-width: $mobile-width)
+          grid-template-columns: repeat(1, 1fr)
 
       .title
         font-weight: bold
