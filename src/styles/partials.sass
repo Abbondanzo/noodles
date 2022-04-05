@@ -230,3 +230,40 @@ $nav-color: #1b1b1b
   border-top-left-radius: 8px
   border-top-right-radius: 8px
   box-shadow: 0px 0px 15px 6px #333
+
+#interactive-modal
+  display: none
+  position: fixed
+  z-index: 999
+  padding-top: 80px
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+  overflow: auto
+  background-color: rgba(0,0,0,0.4)
+
+  .modal-content
+    background-color: #1d1d1d
+    margin: auto
+    padding: 20px
+    border: 1px solid #666
+    width: 80%
+    border-radius: 16px
+
+    button
+      border: 2px solid #555
+      border-radius: 4px
+      color: #fff
+      min-width: 150px
+      font-weight: 500
+      font-size: 16px
+      line-height: 40px
+      text-align: center
+      box-sizing: border-box
+      cursor: pointer
+      background-color: transparent
+
+      &:hover
+        border-color: $primary-color
+        color: $primary-color
