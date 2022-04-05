@@ -1,18 +1,36 @@
 @import variables
 
+$nav-max-width: 720px
+$nav-mobile-height: 60px
+$nav-color: #1b1b1b
+
 #navbar
-  background-color: #1b1b1b
+  background-color: $nav-color
   width: 100%
   z-index: 99
   flex: 0
+
+  @media screen and (max-width: $nav-max-width)
+    margin-bottom: $nav-mobile-height
 
   .flex-container
     display: flex
     justify-content: space-between
     align-items: center
 
+    @media screen and (max-width: $nav-max-width)
+      height: $nav-mobile-height
+      background-color: $nav-color
+      position: absolute
+      left: 0
+      right: 0
+      top: 0
+
     .logo
       max-height: 100%
+
+      @media screen and (max-width: $nav-max-width)
+        margin-left: 8px
 
       svg
         width: 150px
@@ -22,6 +40,9 @@
       color: $primary-color
       font-weight: bold
 
+      @media screen and (max-width: $nav-max-width)
+        display: none
+
     $underline-height: 6px
 
     .links
@@ -29,6 +50,9 @@
       align-items: center
       color: #fff
       padding-bottom: $underline-height
+
+      @media screen and (max-width: $nav-max-width)
+        display: none
 
       .margin-left
         margin-left: 20px
@@ -71,6 +95,88 @@
 
             &::before
               right: 0
+
+  .mobile
+    display: none
+
+    @media screen and (max-width: $nav-max-width)
+      display: block
+
+    #toggle
+      opacity: 0
+
+    #toggle:checked + .button > span
+      transform: rotate(45deg)
+
+    #toggle:checked + .button > span::before
+      top: 0
+      transform: rotate(0deg)
+
+    #toggle:checked + .button > span::after
+      top: 0
+      transform: rotate(90deg)
+
+    #toggle:checked ~ .mobile-links
+      right: 0 !important
+
+    .button
+      position: fixed
+      top: 28px
+      right: 20px
+      width: 26px
+      height: 26px
+      cursor: pointer
+      z-index: 1
+
+      & > span, & > span::before, & > span::after
+        display: block
+        position: absolute
+        width: 100%
+        height: 2px
+        background-color: $primary-color
+        transition-duration: .25s
+
+      & > span::before
+        content: ''
+        top: -8px
+
+      & > span::after
+        content: ''
+        top: 8px
+
+    .mobile-links
+      display: block
+      position: fixed
+      top: 0
+      right: -100%
+      width: 100%
+      max-width: 400px
+      height: 100%
+      margin: 0
+      padding: 80px 0
+      list-style: none
+      background-color: #1b1b1b
+      transition-duration: .25s
+      text-align: center
+
+      .mobile-link
+        margin: 0 16px
+        padding: 16px
+        font-size: 20px
+        border-bottom: 1px solid #4a4a4a
+
+        &.active
+          font-weight: bold
+          color: $primary-color
+
+      .cta
+        border: 1px solid $primary-color
+        border-radius: 4px
+        min-width: 150px
+        font-size: 20px
+        line-height: 40px
+        padding: 8px
+        margin: 16px
 
 #body-main
   flex: 1
