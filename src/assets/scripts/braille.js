@@ -104,7 +104,7 @@ const undoRewrite = () => {
   }
 };
 
-const runBrailleScript = () => {
+(() => {
   const ENABLE_ID = "enable-visually-impaired";
   const DISABLE_ID = "disable-visually-impaired";
   const LOCAL_STORAGE_KEY = "visually-impaired-enabled";
@@ -140,6 +140,4 @@ const runBrailleScript = () => {
   } catch (e) {
     // Do nothing
   }
-};
-
-runBrailleScript();
+})();

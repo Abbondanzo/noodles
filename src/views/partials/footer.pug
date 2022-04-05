@@ -40,6 +40,14 @@ mixin footerLinksList(links)
           a(href="https://github.com/Abbondanzo/noodles") GitHub
 .post-footer.content
   .copyright Not &copy; Nood.pictures #{new Date().getFullYear()}
+
+#interactive-modal
+  .modal-content
+    h1 That's a spicy meat-a-ball!
+    p We didn't have enough money in the budget to make this a real website. Instead, pretend that what you just clicked on was a real interaction. Maybe it was a like on an image or hitting that fake play button. Queue the sounds of someone #[i really] enjoying their noodles. *slurp*
+    button#close-modal Close
+
 tooltip#disable-visually-impaired.hidden Disable Visually Impaired Mode
 
 script(src=`${baseURL}/assets/scripts/braille.js`)
+script(src=`${baseURL}/assets/scripts/interactive.js`)
