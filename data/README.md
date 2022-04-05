@@ -1,10 +1,10 @@
 # How to add data
 
-Adding data is pretty simple. Navigate to any of the files in the `data/` folder and simply edit them. Changes that get approved will automatically get built into the website. For example, if you'd like to modify or add a title, open the `titles.txt` file and place your entry on a newline. All files that end in `.txt` are delimited by newlines.
+Adding data is pretty simple. Navigate to any of the files in this folder and simply edit them. Changes that get approved will automatically get built into the website. For example, if you'd like to modify or add a title, open the `titles.txt` file and place your entry on a newline. All files that end in `.txt` are delimited by newlines.
 
 ## Adding brands
 
-The `brand.yml` file within the `data/` folder is a bit special: it is a YAML file that follows a specific formatting. Each brand must start with the `- name` key. Sites also have a `- name` key but at a greater depth, and must also include a `url` key after that. Attributes are any valid key/value pair.
+The `brand.yml` file within this folder is a bit special: it is a YAML file that follows a specific formatting. Each brand must start with the `- name` key. Sites also have a `- name` key but at a greater depth, and must also include a `url` key after that. Attributes are any valid key/value pair.
 
 ## Adding photos
 

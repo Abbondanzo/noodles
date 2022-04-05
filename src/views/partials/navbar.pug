@@ -5,6 +5,7 @@
     {path: "/noodstars", name: "Noodstars"},
     {path: "/community", name: "Community"},
   ]
+- const uploadURL = "https://github.com/Abbondanzo/noodles/tree/master/data#how-to-add-data"
 
 navbar#navbar
   .content
@@ -17,7 +18,7 @@ navbar#navbar
           a(href=`${baseURL}${page.path}`)
             .link(class={ "active": page.name === pageTitle })= page.name
       .cta
-        a(href="https://github.com/Abbondanzo/noodles#how-to-add-data") Upload
+        a(href=uploadURL) Upload
 
       .mobile
         input#toggle(type="checkbox")
@@ -30,5 +31,5 @@ navbar#navbar
               li.mobile-link(class={ "active": page.name === pageTitle })= page.name
 
 
-          a(href="https://github.com/Abbondanzo/noodles#how-to-add-data") 
+          a(href=uploadURL) 
             .cta Upload
