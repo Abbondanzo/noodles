@@ -86,8 +86,15 @@
     grid-column-gap: 16px
     padding: 20px 0
 
+    @media screen and (max-width: $mobile-width)
+      grid-template-columns: repeat(1, 1fr)
+      text-align: center
+
   .footer-block
     color: #aaa
+
+    @media screen and (max-width: $mobile-width)
+      padding: 0 16px
 
     li
       margin-bottom: 8px
@@ -101,7 +108,7 @@
         text-decoration: underline
 
 .post-footer
-  padding: 16px
+  padding: 16px 0
 
   .copyright
     text-align: center
