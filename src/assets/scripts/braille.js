@@ -109,7 +109,18 @@ const undoRewrite = () => {
   const DISABLE_ID = "disable-visually-impaired";
   const LOCAL_STORAGE_KEY = "visually-impaired-enabled";
 
+  const isEnabled = () => {
+    try {
+      return Boolean(localStorage.getItem(LOCAL_STORAGE_KEY));
+    } catch (e) {
+      return false;
+    }
+  };
+
   const enable = () => {
+    if (isEnabled()) {
+      return;
+    }
     rewriteBraille();
     document.getElementById(DISABLE_ID).classList.remove("hidden");
     try {
@@ -120,6 +131,9 @@ const undoRewrite = () => {
   };
 
   const disable = () => {
+    if (!isEnabled()) {
+      return;
+    }
     undoRewrite();
     document.getElementById(DISABLE_ID).classList.add("hidden");
     try {
@@ -135,7 +149,8 @@ const undoRewrite = () => {
   // Check if enabled
   try {
     if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
-      enable();
+      rewriteBraille();
+      document.getElementById(DISABLE_ID).classList.remove("hidden");
     }
   } catch (e) {
     // Do nothing
