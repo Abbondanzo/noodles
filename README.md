@@ -4,7 +4,7 @@
 
 # Noodles
 
-https://nood.pictures/
+https://nood.pics/
 
 Send me spicy noods. Preferably pictures. Lasagna, ramen, spaghetti--heck, even tortelloni. This project is your one-stop shop for all things noodles.
 
